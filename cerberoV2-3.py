@@ -219,7 +219,7 @@ def generate_usernames(info):
     numeric_suffixes = []
     if info['birth_year']:
         numeric_suffixes.append(info['birth_year'])
-        numeric_suffixes.append(info['birth_year'][2:]) # Año corto
+        numeric_suffixes.append(info['birth_year'][2:])
     current_year_short = str(datetime.now().year)[2:]
     numeric_suffixes.append(current_year_short)
     
@@ -289,3 +289,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# --- AGRADEZCO TU USO Y DIFUSIÓN DE ESTA HERRAMIENTA ---

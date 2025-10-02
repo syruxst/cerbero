@@ -261,7 +261,7 @@ def run_audit_mode():
         print("[✓] BUENA NOTICIA [✓]\nTu contraseña NO FUE ENCONTRADA en esta wordlist.\nEs una buena señal, pero recuerda mantener siempre buenas prácticas de seguridad.")
     print("-" * 50)
 
-# --- FUNCIÓN PRINCIPAL (MAIN) ---
+# --- FUNCIÓN PRINCIPAL (MAIN) --- 
 def main():
     print_presentation()
     while True:

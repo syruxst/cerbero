@@ -87,7 +87,6 @@ def generate_base_words(info):
         elif isinstance(data, list):
             for item in data: extract_words(item)
         elif isinstance(data, str) and data:
-            # *** CORRECCIÓN: Usar 'data' en lugar de 'item' ***
             cleaned_item = data.strip()
             if cleaned_item:
                 for word in cleaned_item.lower().split(): words.add(word)

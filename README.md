@@ -59,7 +59,7 @@ Modo de Uso
 Ejecuta el script desde tu terminal para acceder al menú principal.
 
 Bash
-python cerberoV2-3.py
+python cerbero.py
 
 Aparecerá un menú con las siguientes opciones:
 

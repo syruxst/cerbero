@@ -9,7 +9,7 @@ Markdown
 ██║      ██╔══╝  ██╔══██╗██╔══██╗██╔══╝  ██╔══██╗██║   ██║
 ╚██████╗ ███████╗██║  ██║██████╔╝███████╗██║  ██║╚██████╔╝
  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ 
-  --- Professional Audit Edition v2.3 ---
+  --- Professional Audit Edition v2.7.1 ---
 
 Cerbero es una suite de herramientas en Python diseñada para el perfilado de credenciales. Su objetivo es generar listas de nombres de usuario y contraseñas altamente personalizadas y eficientes, basadas en información específica de un objetivo. A diferencia de generadores genéricos, Cerbero utiliza datos contextuales para simular los patrones que las personas reales usan para crear sus credenciales, aumentando drásticamente la efectividad en auditorías de seguridad y pentesting ético.
 

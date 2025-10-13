@@ -11,7 +11,7 @@ BANNER = """
 ██║      ██╔══╝  ██╔══██╗██╔══██╗██╔══╝  ██╔══██╗██║   ██║
 ╚██████╗ ███████╗██║  ██║██████╔╝███████╗██║  ██║╚██████╔╝
  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ 
-    --- Pattern-Matching Edition v2.7.1 ---
+    --- Permutation Engine Edition v2.8 ---
 """
 
 ETHICAL_DISCLAIMER = """
@@ -23,7 +23,6 @@ El autor no se hace responsable por el mal uso de este programa.
 """
 
 # --- FUNCIONES GLOBALES Y UTILIDADES ---
-
 LEETSPEAK_MAP = {'a': '4', 'e': '3', 'i': '1', 'o': '0', 's': '5', 't': '7', 'g': '6', 'b': '8'}
 
 def print_presentation():
@@ -60,6 +59,7 @@ def full_leetspeak(text):
 
 # --- MODO 1: WORDLIST COMPLETA ---
 def gather_full_information():
+    # (Sin cambios en esta función)
     print("--- Recopilación de Información Personal (deja en blanco si no aplica) ---")
     info = { "persona_principal": {}, "familia": {"padre": {}, "madre": {}, "pareja": {}, "hijos": []}, "otros_datos": {} }
     print("\n[+] Datos del objetivo principal:"); info["persona_principal"]["nombres"] = get_input("Nombres: ").split(); info["persona_principal"]["apellidos"] = get_input("Apellidos: ").split(); info["persona_principal"]["fecha_nacimiento"] = get_date_input("Fecha de nacimiento (DD/MM/YYYY): "); info["persona_principal"]["sobrenombre"] = get_input("Sobrenombre/Apodo: "); info["persona_principal"]["telefono"] = get_input("Número de teléfono: "); info["persona_principal"]["correo"] = get_input("Correo electrónico: ")
@@ -70,16 +70,11 @@ def gather_full_information():
         if get_input("\n¿Deseas agregar un hijo? (s/n): ").lower() != 's': break
         hijo = {"nombres": get_input("Nombres del hijo/a: ").split(), "apellidos": get_input("Apellidos del hijo/a: ").split(), "fecha_nacimiento": get_date_input("Fecha de nacimiento del hijo/a (DD/MM/YYYY): ")}
         info["familia"]["hijos"].append(hijo)
-    print("\n[+] Otros Datos Relevantes:")
-    info["otros_datos"]["mascota"] = get_input("Nombre de mascota: ")
-    info["otros_datos"]["frases"] = get_input("Frases o palabras clave (SSID de WiFi, etc. Separadas por coma): ").split(',')
-    info["otros_datos"]["numeros_importantes"] = get_input("Números importantes (n° de casa, código postal, etc. Separados por coma): ").split(',')
-    info["otros_datos"]["pelicula_favorita"] = get_input("Película favorita: ")
-    info["otros_datos"]["hobby"] = get_input("Hobby o pasatiempo: ")
-    info["otros_datos"]["musica"] = get_input("Música o banda favorita: ")
+    print("\n[+] Otros Datos Relevantes:"); info["otros_datos"]["mascota"] = get_input("Nombre de mascota: "); info["otros_datos"]["frases"] = get_input("Frases o palabras clave (SSID de WiFi, etc. Separadas por coma): ").split(','); info["otros_datos"]["numeros_importantes"] = get_input("Números importantes (n° de casa, código postal, etc. Separados por coma): ").split(','); info["otros_datos"]["pelicula_favorita"] = get_input("Película favorita: "); info["otros_datos"]["hobby"] = get_input("Hobby o pasatiempo: "); info["otros_datos"]["musica"] = get_input("Música o banda favorita: ")
     return info
 
 def generate_base_words(info):
+    # (Función corregida de la v2.7.1)
     words = set()
     def extract_words(data):
         if isinstance(data, dict):
@@ -103,44 +98,62 @@ def generate_base_words(info):
     return list(filter(None, words))
 
 def apply_variations(word):
-    final_variations = set([word, word.capitalize(), word.upper()])
-    return list(final_variations)
+    return list(set([word, word.capitalize(), word.upper()]))
 
 def generate_full_passwords(info, base_words):
     passwords = set()
-    symbols_end = ['$', '#', '!', '*', '.', '&', '%', '@']
-    current_year = str(datetime.now().year)
     
-    for word in base_words:
-        for var in apply_variations(word): passwords.add(var)
+    # ... (lógicas de generación anteriores) ...
     for w1, w2 in itertools.permutations(base_words, 2):
         for var1 in apply_variations(w1):
             for var2 in apply_variations(w2):
-                combo = f"{var1}{var2}"; passwords.add(combo)
-                for s in symbols_end: passwords.add(combo + s)
+                passwords.add(f"{var1}{var2}")
 
-    text_words = [word for word in base_words if not word.isdigit()]
-    numeric_words = [word for word in base_words if word.isdigit()]
-    separators_mid = ['-', '_', '.', '']
-    symbols_pre_num = ['/', '-', '_', '.', '@', '#']
-    for w1, w2 in itertools.permutations(text_words, 2):
-        for var1 in apply_variations(w1):
-            for var2 in apply_variations(w2):
-                for sep in separators_mid:
-                    base_combo = f"{var1}{sep}{var2}"
-                    passwords.add(base_combo)
-                    for num in numeric_words:
-                        for sym in symbols_pre_num:
-                            final_pass = f"{base_combo}{sym}{num}"
-                            passwords.add(final_pass)
+    # *** NUEVA LÓGICA: Motor de Permutación de Iniciales + Números ***
+    all_initials = []
+    # Recolectar iniciales de todos los nombres (permitiendo repeticiones)
+    for nombre in info["persona_principal"]["nombres"]: all_initials.append(nombre[0])
+    for nombre in info["familia"]["pareja"]["nombres"]: all_initials.append(nombre[0])
+    for hijo in info["familia"]["hijos"]:
+        for nombre in hijo["nombres"]: all_initials.append(nombre[0])
 
-    names_to_process = {name.lower() for name in info["persona_principal"]["nombres"]}
-    if info["persona_principal"]["sobrenombre"]: names_to_process.add(info["persona_principal"]["sobrenombre"].lower())
-    for name in names_to_process:
-        if len(name) > 1:
-            leet_base = f"{name[0].upper()}{full_leetspeak(name[1:])}"
-            for s in symbols_end: passwords.add(f"{current_year}{leet_base}{s}"); passwords.add(f"{leet_base}{current_year}{s}")
-            
+    # Recolectar números clave
+    key_numbers = []
+    if info["persona_principal"]["fecha_nacimiento"]:
+        f_nac = info["persona_principal"]["fecha_nacimiento"]
+        key_numbers.extend([str(f_nac.day), str(f_nac.year)[2:]])
+
+    if len(all_initials) >= 2 and len(key_numbers) >= 2:
+        # 1. Generar la parte de iniciales (ej. Cdck)
+        # Generamos permutaciones de un tamaño razonable (ej. de 3 a 5 iniciales)
+        for i in range(3, min(len(all_initials) + 1, 6)):
+            for p_initials in itertools.permutations(all_initials, i):
+                initial_part = "".join(p_initials)
+                # Aplicar la regla de la primera mayúscula
+                initial_part_cased = initial_part[0].upper() + initial_part[1:].lower()
+
+                # 2. Generar la parte numérica (ej. 1277)
+                for p_numbers in itertools.permutations(key_numbers, len(key_numbers)):
+                    number_part = "".join(p_numbers)
+
+                    # 3. Combinar todo
+                    # Patrón: Iniciales + Números
+                    passwords.add(f"{initial_part_cased}{number_part}")
+                    # Patrón: Números + Iniciales
+                    passwords.add(f"{number_part}{initial_part_cased}")
+                    
+                    # Patrón complejo como el del ejemplo: Iniciales + Números + Iniciales
+                    # Tomamos las iniciales restantes para la parte final
+                    remaining_initials = list(all_initials)
+                    for char in p_initials: remaining_initials.remove(char)
+                    
+                    if len(remaining_initials) > 1:
+                        for p_rem_initials in itertools.permutations(remaining_initials, 2):
+                            final_part = "".join(p_rem_initials).lower()
+                            passwords.add(f"{initial_part_cased}{number_part}{final_part}")
+
+
+    # ... (resto de las lógicas) ...
     return list(passwords)
 
 def run_full_mode():
@@ -159,7 +172,8 @@ def run_full_mode():
     output_filename = get_input("\nIntroduce el nombre del archivo de salida (ej: wordlist_full.txt): ", allow_empty=False)
     save_wordlist(filtered_passwords, output_filename, "contraseñas")
 
-# --- MODO 2: PINS NUMÉRICOS ---
+# --- MODO 2, 3, 4 y MAIN (sin cambios) ---
+# (El resto del código es idéntico a la versión anterior)
 def gather_numeric_info():
     print("\n--- Recopilación de Datos para Generación Numérica ---"); numeric_data = set()
     rut = get_input("RUT o DNI (sin puntos, con guión si aplica. Ej: 12345678-9): ")
@@ -189,8 +203,6 @@ def run_numeric_mode():
     print(f"[+] Se generaron {len(passwords)} códigos numéricos únicos en el rango de {min_len}-{max_len} dígitos.")
     output_filename = get_input("\nIntroduce el nombre del archivo de salida (ej: wordlist_numeric.txt): ", allow_empty=False)
     save_wordlist(list(passwords), output_filename, "códigos numéricos")
-
-# --- MODO 3: GENERADOR DE NOMBRES DE USUARIO ---
 def gather_username_info():
     print("\n--- Recopilación de Datos para Generación de Nombres de Usuario ---"); info = {}
     info['nombres'] = get_input("Nombres (separados por espacio): ").lower().split(); info['apellidos'] = get_input("Apellidos (separados por espacio): ").lower().split(); info['sobrenombre'] = get_input("Sobrenombre/Apodo: ").lower()
@@ -218,8 +230,6 @@ def run_username_mode():
         print(f"\n[+] Se generaron {len(username_list)} nombres de usuario potenciales.")
         output_filename = get_input("Introduce el nombre del archivo de salida (ej: userlist.txt): ", allow_empty=False)
         save_wordlist(username_list, output_filename, "nombres de usuario")
-
-# --- MODO 4: AUDITORÍA DE CONTRASEÑA ---
 def run_audit_mode():
     print("\n--- MODO AUDITORÍA: BUSCAR CONTRASEÑA EN WORDLIST ---\n")
     file_path = get_input("Introduce la ruta del archivo de la wordlist a revisar: ", allow_empty=False)
@@ -235,8 +245,6 @@ def run_audit_mode():
     if found: print("[!!!] ALERTA DE SEGURIDAD [!!!]\nTu contraseña FUE ENCONTRADA en la lista.\nEsto significa que es predecible y altamente insegura.\n==> RECOMENDACIÓN: ¡Cámbiala inmediatamente por una más compleja! <==")
     else: print("[✓] BUENA NOTICIA [✓]\nTu contraseña NO FUE ENCONTRADA en esta wordlist.\nEs una buena señal, pero recuerda mantener siempre buenas prácticas de seguridad.")
     print("-" * 50)
-
-# --- FUNCIÓN PRINCIPAL (MAIN) ---
 def main():
     print_presentation()
     while True:

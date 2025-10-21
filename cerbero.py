@@ -149,7 +149,7 @@ def generate_full_passwords(info, base_words):
                     for num in numeric_words:
                         for sym in symbols_pre_num: passwords.add(f"{base}{sym}{num}")
 
-    # --- Motor 3: Patrones Modernos con Leetspeak (2025D4n13l%) ---
+    # --- Motor 3: Patrones Modernos con Leetspeak  ---
     print("  -> Ejecutando Motor 3: Patrones modernos con Leetspeak...")
     current_year = str(datetime.now().year)
     names = {n.lower() for n in info["persona_principal"]["nombres"] if n}
@@ -159,7 +159,7 @@ def generate_full_passwords(info, base_words):
             leet_base = f"{name[0].upper()}{full_leetspeak(name[1:])}"
             for sym in symbols: passwords.add(f"{current_year}{leet_base}{sym}"); passwords.add(f"{leet_base}{current_year}{sym}")
 
-    # --- Motor 4: Patrones Centrados en Hijos (2014Jiub$) ---
+    # --- Motor 4: Patrones Centrados en Hijos ---
     print("  -> Ejecutando Motor 4: Patrones centrados en hijos...")
     for hijo in info["familia"]["hijos"]:
         if hijo["fecha_nacimiento"] and hijo["nombres"]:
@@ -169,7 +169,7 @@ def generate_full_passwords(info, base_words):
                 initials_cased = initials.capitalize()
                 for sym in symbols: passwords.add(f"{year}{initials_cased}{sym}"); passwords.add(f"{initials_cased}{year}{sym}")
 
-    # --- Motor 5: Permutación de Iniciales (Cdck1277kd) ---
+    # --- Motor 5: Permutación de Iniciales ---
     print("  -> Ejecutando Motor 5: Permutación de iniciales...")
     all_initials = [n[0] for n in info["persona_principal"]["nombres"] if n] + [n[0] for n in info["familia"]["pareja"]["nombres"] if n] + [n[0] for h in info["familia"]["hijos"] for n in h["nombres"] if n]
     key_numbers = set()
@@ -190,7 +190,7 @@ def generate_full_passwords(info, base_words):
                         for p_rem in itertools.permutations(remaining, 2): passwords.add(f"{initial_part_cased}{number_part}{''.join(p_rem).lower()}")
     else: print("     (Saltado: no hay suficientes iniciales o fechas para permutaciones)")
 
-    # --- Motor 6: "Mangler" de Frases (R3d$S3gura...) ---
+    # --- Motor 6: "Mangler" de Frases ---
     print("  -> Ejecutando Motor 6: 'Mangler' de frases...")
     mangle_phrases = [p for p in info.get("otros_datos", {}).get("mangle_phrases", []) if p]
     if mangle_phrases:

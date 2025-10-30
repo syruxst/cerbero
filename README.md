@@ -36,14 +36,14 @@ Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar un
 
 | Motor | Descripción                                         | Ejemplo de Contraseña Generada        |
 | :---- | :-------------------------------------------------- | :------------------------------------ |
-| **1** | **Combinaciones Simples:** Estilo RockYou clásico.      | `daniel1981`, `sandybaez`             |
-| **2** | **Patrones Complejos:** Estilo WiFi/corporativo.      | `kasa-baez/38`, `Daniel_Ugalde#2024`  |
-| **3** | **Leetspeak Moderno:** Patrón de `Año+NombreLeet`.     | `2025D4n13l%`                         |
-| **4** | **Centrado en Hijos:** Usa el año e iniciales del hijo.| `2014Jiub$`                           |
-| **5** | **Permutación de Iniciales:** Teje iniciales y números.| `Dsb1676` (Daniel, Sandy, Bastian...) |
+| **1** | **Combinaciones Simples:** Estilo RockYou clásico.      | `Juan1982`, `tamarapavez`             |
+| **2** | **Patrones Complejos:** Estilo WiFi/corporativo.      | `kasa-tapia/329`, `Juan_Pereze#2024`  |
+| **3** | **Leetspeak Moderno:** Patrón de `Año+NombreLeet`.     | `2025Ju4n%`                         |
+| **4** | **Centrado en Hijos:** Usa el año e iniciales del hijo.| `2012Tpub$`                           |
+| **5** | **Permutación de Iniciales:** Teje iniciales y números.| `Jtb1772` (Juan, Tamara, Bastian...) |
 | **6** | **"Mangler" de Frases:** Destroza frases con Leetspeak.| `R3d$S3gura2024!#`                     |
-| **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Daniel-Ugalde1981!`                  |
-| **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `S76b96j14` (Sandy76, Bastian96...)   |
+| **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Juan-Perez1982!`                  |
+| **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `T72b96j15` (Tamara72, Bastian96...)   |
 
 ## 🎬 Demostración
 

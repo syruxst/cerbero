@@ -45,29 +45,26 @@ Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar un
 | **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Juan-Perez1982!`                  |
 | **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `T72b96j15` (Tamara72, Bastian96...)   |
 
-## 🎬 Demostración
-
-*Aquí puedes insertar un GIF que muestre la herramienta en acción. ¡Es la mejor forma de venderla!*
-`[placeholder for demo.gif]`
-
 ## 🛠️ Instalación y Uso
 
 Cerbero no requiere instalación. Solo necesitas Python 3.7 o superior.
 
-**1. Clona el repositorio:**
 ```bash
+1. Clona el repositorio:
+
 git clone https://github.com/syruxst/cerbero.git
+
 2. Navega al directorio:
-code
-Bash
 cd cerbero
+
 3. Ejecuta el script:
-code
-Bash
 python cerbero.py
+
 Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
+
 ⚠️ Advertencia de Uso Ético
 [!] IMPORTANTE: Cerbero es una herramienta creada con fines educativos y para ser utilizada exclusivamente en auditorías de seguridad y pentesting dentro de un marco legal y con autorización explícita del propietario del sistema. El uso no autorizado de esta herramienta para intentar acceder a sistemas ajenos es ilegal. El autor no se hace responsable del mal uso de este programa.
+
 🤝 Cómo Contribuir
 ¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos motores, optimizaciones o correcciones, no dudes en participar.
 Haz un Fork del proyecto.

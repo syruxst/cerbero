@@ -22,7 +22,7 @@ BANNER = f"""{Colors.MAGENTA}
 ██║      ██╔══╝  ██╔══██╗██╔══██╗██╔══╝  ██╔══██╗██║   ██║
 ╚██████╗ ███████╗██║  ██║██████╔╝███████╗██║  ██║╚██████╔╝
  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ 
-    --- Biographical Engine v5.1 ---
+    --- Linter Clean Edition v5.3 ---
 {Colors.RESET}"""
 
 ETHICAL_DISCLAIMER = f"""{Colors.YELLOW}
@@ -73,6 +73,7 @@ def full_leetspeak(text):
         if replacements: text = text.replace(char, replacements[0])
     return text
 
+# --- SECCIÓN DE RECOLECCIÓN DE DATOS (gather_*) ---
 def gather_smart_information(required_sections):
     print(f"{Colors.CYAN}--- Recopilación de Información Personal (deja en blanco si no aplica) ---{Colors.RESET}")
     info = { "persona_principal": {}, "familia": {"pareja": {}, "hijos": []}, "otros_datos": {} }
@@ -102,6 +103,34 @@ def gather_smart_information(required_sections):
         info["otros_datos"]["mangle_phrases"] = [normalize_string(p) for p in get_input("Frases a 'destrozar' (ej: Red Segura): ", normalize=True).split(',')]
     return info
 
+def gather_numeric_info():
+    print(f"\n{Colors.CYAN}--- Recopilación de Datos para Generación Numérica ---{Colors.RESET}"); numeric_data = set()
+    rut = get_input("RUT o DNI (sin puntos, con guión si aplica): ")
+    if rut: numeric_data.add(normalize_string(rut).split('-')[0])
+    print("\nFechas de Nacimiento (DD/MM/YYYY):")
+    dates = [get_date_input("  - Persona principal: "), get_date_input("  - Pareja: ")]
+    child_count = 1
+    while True:
+        date = get_date_input(f"  - Hijo/a {child_count}: ")
+        if date: dates.append(date); child_count += 1
+        elif get_input("¿Agregar otro hijo? (s/n): ").lower() != 's': break
+    for d in filter(None, dates):
+        numeric_data.update([str(d.day), f"{d.day:02d}", str(d.month), f"{d.month:02d}", str(d.year), str(d.year)[2:], f"{d.day:02d}{d.month:02d}", f"{d.month:02d}{d.day:02d}"])
+    print("\nOtros Números Relevantes:")
+    numeric_data.add(get_input("  - Número de casa/departamento: "))
+    numeric_data.add(get_input("  - Últimos 4 dígitos del teléfono/tarjeta: "))
+    return list(filter(None, numeric_data))
+
+def gather_username_info():
+    print(f"\n{Colors.CYAN}--- Recopilación de Datos para Generación de Nombres de Usuario ---{Colors.RESET}"); info = {}
+    info['nombres'] = get_input("Nombres (separados por espacio): ", normalize=True).lower().split()
+    info['apellidos'] = get_input("Apellidos (separados por espacio): ", normalize=True).lower().split()
+    info['sobrenombre'] = get_input("Sobrenombre/Apodo: ", normalize=True).lower()
+    birth_date = get_date_input("Fecha de nacimiento (para usar el año): ")
+    info['birth_year'] = str(birth_date.year) if birth_date else None
+    return info
+
+# --- SECCIÓN DE GENERACIÓN Y MOTORES (generate_*, apply_*, motor_*) ---
 def generate_base_words(info):
     words = set()
     def extract_words(data):
@@ -133,25 +162,6 @@ def apply_mangling_rules(word):
                 for j, index in enumerate(indices): temp_word[index] = replacement_values[j]
                 mangled_word = "".join(temp_word); results.update([mangled_word, mangled_word.capitalize(), mangled_word.upper()])
     return list(results)
-
-def generate_full_passwords(info, base_words, min_len, max_len, engines_to_run, dry_run):
-    passwords = set(); stats = {}
-    def add_password(p):
-        if min_len <= len(p) <= max_len:
-            if not dry_run: passwords.add(p)
-            return 1
-        return 0
-    text_words = [word for word in base_words if not word.isdigit()]; numeric_words = [word for word in base_words if word.isdigit()]; symbols = ['$', '#', '!', '*', '.', '&', '%', '@', '/']
-    engine_functions = {'1': motor_1_combinaciones_simples, '2': motor_2_patrones_complejos, '3': motor_3_leetspeak_moderno, '4': motor_4_centrado_en_hijos, '5': motor_5_permutacion_iniciales, '6': motor_6_mangler_frases, '7': motor_7_combinatorio_creativo, '8': motor_8_cadenas_biograficas}
-    total_count = 0; total_start_time = time.time()
-    for engine_id in sorted(engine_functions.keys()):
-        if 'all' in engines_to_run or engine_id in engines_to_run:
-            start_time = time.time(); engine_name = engine_functions[engine_id].__name__.replace('_', ' ').replace('motor ', 'Motor '); print(f"  {Colors.CYAN}->{Colors.RESET} {engine_name}...")
-            count = engine_functions[engine_id](info, text_words, numeric_words, symbols, add_password); end_time = time.time()
-            total_count += count; stats[engine_name] = {'count': count, 'time': end_time - start_time}
-    total_end_time = time.time(); stats['Total'] = {'count': total_count if dry_run else len(passwords), 'time': total_end_time - total_start_time}
-    if dry_run: return total_count, stats
-    return list(passwords), stats
 
 def motor_1_combinaciones_simples(info, text_words, numeric_words, symbols, add_func):
     count = 0
@@ -234,35 +244,60 @@ def motor_7_combinatorio_creativo(info, text_words, numeric_words, symbols, add_
                     for s in symbols: count += add_func(f"{base_sep}{s}")
     return count
 def motor_8_cadenas_biograficas(info, text_words, numeric_words, symbols, add_func):
-    count = 0
-    bio_chunks = []
-    
+    count = 0; people = []
     pareja = info.get("familia", {}).get("pareja", {})
     if pareja.get("nombres") and pareja.get("fecha_nacimiento"):
-        initial = pareja["nombres"][0][0]
-        year_short = str(pareja["fecha_nacimiento"].year)[2:]
-        bio_chunks.append(f"{initial.upper()}{year_short}")
-        bio_chunks.append(f"{initial.lower()}{year_short}")
-        
+        people.append({"initial": pareja["nombres"][0][0], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
     for hijo in info.get("familia", {}).get("hijos", []):
         if hijo.get("nombres") and hijo.get("fecha_nacimiento"):
-            initial = hijo["nombres"][0][0]
-            year_short = str(hijo["fecha_nacimiento"].year)[2:]
-            bio_chunks.append(f"{initial.upper()}{year_short}")
-            bio_chunks.append(f"{initial.lower()}{year_short}")
-            
-    if len(bio_chunks) < 2:
-        print(f"     {Colors.YELLOW}(Saltado: no hay suficientes 'pares biográficos' (persona con nombre y fecha)){Colors.RESET}")
-        return 0
-        
-    for length in range(2, min(len(bio_chunks) + 1, 5)):
-        for p in itertools.permutations(bio_chunks, length):
-            password = "".join(p)
-            count += add_func(password.lower())
-            count += add_func(password[0].upper() + password[1:].lower())
-            
+            people.append({"initial": hijo["nombres"][0][0], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
+    if len(people) < 2: print(f"     {Colors.YELLOW}(Saltado: no hay suficientes 'pares biográficos'){Colors.RESET}"); return 0
+    for length in range(2, len(people) + 1):
+        for p_people in itertools.permutations(people, length):
+            chunk_variations_for_permutation = []
+            for person in p_people:
+                initial_lower = person['initial'].lower(); initial_upper = person['initial'].upper(); year = person['year_short']
+                chunk_variations_for_permutation.append([f"{initial_lower}{year}", f"{initial_upper}{year}"])
+            for combo in itertools.product(*chunk_variations_for_permutation): count += add_func("".join(combo))
     return count
 
+def generate_full_passwords(info, base_words, min_len, max_len, engines_to_run, dry_run):
+    passwords = set(); stats = {}
+    def add_password(p):
+        if min_len <= len(p) <= max_len:
+            if not dry_run: passwords.add(p)
+            return 1
+        return 0
+    text_words = [word for word in base_words if not word.isdigit()]; numeric_words = [word for word in base_words if word.isdigit()]; symbols = ['$', '#', '!', '*', '.', '&', '%', '@', '/']
+    engine_functions = {'1': motor_1_combinaciones_simples, '2': motor_2_patrones_complejos, '3': motor_3_leetspeak_moderno, '4': motor_4_centrado_en_hijos, '5': motor_5_permutacion_iniciales, '6': motor_6_mangler_frases, '7': motor_7_combinatorio_creativo, '8': motor_8_cadenas_biograficas}
+    total_count = 0; total_start_time = time.time()
+    for engine_id in sorted(engine_functions.keys()):
+        if 'all' in engines_to_run or engine_id in engines_to_run:
+            start_time = time.time(); engine_name = engine_functions[engine_id].__name__.replace('_', ' ').replace('motor ', 'Motor '); print(f"  {Colors.CYAN}->{Colors.RESET} {engine_name}...")
+            count = engine_functions[engine_id](info, text_words, numeric_words, symbols, add_password); end_time = time.time()
+            total_count += count; stats[engine_name] = {'count': count, 'time': end_time - start_time}
+    total_end_time = time.time(); stats['Total'] = {'count': total_count if dry_run else len(passwords), 'time': total_end_time - total_start_time}
+    if dry_run: return total_count, stats
+    return list(passwords), stats
+
+def generate_usernames(info):
+    if not info['nombres'] or not info['apellidos']: print(f"{Colors.YELLOW}[AVISO] Se necesita al menos un nombre y un apellido.{Colors.RESET}"); return []
+    fname, lname, nickname, usernames = info['nombres'][0], info['apellidos'][0], info['sobrenombre'], set()
+    patterns = [fname, lname, nickname, f"{fname}{lname}", f"{lname}{fname}", f"{fname[0]}{lname}", f"{fname}{lname[0]}"]
+    if nickname: patterns.extend([f"{nickname}{lname}", f"{fname}{nickname}"])
+    for p in patterns:
+        if p: usernames.add(p)
+    separators = ['.', '_', '-']
+    for sep in separators: usernames.add(f"{fname}{sep}{lname}"); usernames.add(f"{fname[0]}{sep}{lname}")
+    numeric_suffixes = []
+    if info['birth_year']: numeric_suffixes.extend([info['birth_year'], info['birth_year'][2:]])
+    numeric_suffixes.append(str(datetime.now().year)[2:])
+    base_usernames = list(usernames)
+    for user in base_usernames:
+        for suffix in numeric_suffixes: usernames.add(f"{user}{suffix}")
+    return list(filter(None, usernames))
+
+# --- SECCIÓN DE EJECUCIÓN DE MODOS (run_*) ---
 def run_full_mode():
     print(f"\n{Colors.CYAN}--- MODO COMPLETO: WORDLIST AVANZADA ---{Colors.RESET}\n")
     engine_dependencies = {'1': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '2': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '3': ['principal'], '4': ['hijos'], '5': ['principal', 'pareja', 'hijos'], '6': ['mangle', 'principal'], '7': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '8': ['pareja', 'hijos']}

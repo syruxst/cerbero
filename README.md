@@ -1,90 +1,81 @@
-Markdown
-# Cerbero - Generador de Wordlists Contextuales
+# Cerbero - Suite de Perfilado de Credenciales
 
-```
- _   _  _   _  ____   _   _   ____  
-██████╗ ███████╗██████╗ ██████╗ ███████╗██████╗  ██████╗ 
-██╔════╝ ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══██╗
-██║      █████╗  ██████╔╝██████╔╝█████╗  ██████╔╝██║   ██║
-██║      ██╔══╝  ██╔══██╗██╔══██╗██╔══╝  ██╔══██╗██║   ██║
-╚██████╗ ███████╗██║  ██║██████╔╝███████╗██║  ██║╚██████╔╝
- ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ 
-  --- Professional Audit Edition v2.7.1 ---
+<p align="center">
+  <img src="https://art.syrux.es/cerbero.png" alt="Cerbero Logo">
+</p>
 
-Cerbero es una suite de herramientas en Python diseñada para el perfilado de credenciales. Su objetivo es generar listas de nombres de usuario y contraseñas altamente personalizadas y eficientes, basadas en información específica de un objetivo. A diferencia de generadores genéricos, Cerbero utiliza datos contextuales para simular los patrones que las personas reales usan para crear sus credenciales, aumentando drásticamente la efectividad en auditorías de seguridad y pentesting ético.
+<p align="center">
+  <strong>Una herramienta de línea de comandos en Python para generar wordlists contextuales y de alta precisión para auditorías de seguridad.</strong>
+</p>
 
-¿Por qué Cerbero?
-Las herramientas estándar de generación de wordlists a menudo fallan al intentar adivinar credenciales basadas en la vida personal de un usuario. Es un hecho conocido que una gran cantidad de personas crean contraseñas y nombres de usuario usando una mezcla de:
-Nombres, apellidos y sus iniciales.
-Nombres de hijos, parejas o mascotas.
-Fechas de nacimiento o aniversarios.
-Apodos, hobbies o frases favoritas.
+<p align="center">
+  <img alt="GitHub" src="https://img.shields.io/github/license/syruxst/cerbero?color=blue&style=for-the-badge">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.7+-blue.svg?style=for-the-badge&logo=python">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/syruxst/cerbero?color=blue&style=for-the-badge">
+</p>
 
-Cerbero fue creado para explotar estos patrones, aplicando lógica avanzada y mutaciones inteligentes a un conjunto de datos personales para construir listas de credenciales mucho más efectivas que las genéricas.
+---
 
-Características Principales
-Suite de Herramientas Integrada: Un único script con un menú interactivo para acceder a todas las funcionalidades.
+**Cerbero** es una suite de herramientas diseñada para el perfilado de credenciales. Su objetivo es generar listas de nombres de usuario y contraseñas altamente personalizadas, simulando los patrones que las personas reales usan para crear sus credenciales. A diferencia de generadores genéricos, Cerbero utiliza datos contextuales (OSINT) para aumentar drásticamente la efectividad en auditorías de seguridad y pentesting ético.
 
-Múltiples Modos de Operación:
-Generador de Contraseñas Completo: Crea contraseñas complejas mezclando letras, números y símbolos a partir de un cuestionario exhaustivo.
+## 🚀 Características Principales
 
-Generador de Nombres de Usuario: Crea listas de usuarios potenciales basados en patrones comunes (d.ugalde, dugalde81, daniel.ugalde, etc.).
+-   **🧠 Cuestionario Inteligente:** Solo pregunta la información relevante para los motores de generación que selecciones.
+-   **⚙️ Arquitectura Multi-Motor:** Utiliza 8 lógicas de ataque distintas, desde combinaciones simples hasta patrones biográficos complejos.
+-   **🎯 Modos Especializados:** Incluye generadores específicos para contraseñas, nombres de usuario y PINs numéricos.
+-   🛡️ **Modo de Auditoría Defensiva:** Permite a un usuario verificar si sus propias contraseñas son vulnerables y predecibles.
+-   **✨ Normalización Unicode:** Maneja automáticamente acentos y caracteres especiales (ej: `José` -> `jose`).
+-   **🎛️ Control Total:** Permite activar/desactivar motores, definir límites de longitud y ejecutar en modo simulación (`dry run`).
+-   **📊 Estadísticas Detalladas:** Informa cuántas contraseñas generó cada motor y el tiempo que tardó.
+-   **🎨 Interfaz Moderna:** Una UI de terminal limpia y con colores para una mejor experiencia de usuario.
+-   **🐍 Python Puro:** Sin dependencias externas, fácil de ejecutar y modificar.
 
-Generador de PINs Numéricos: Especializado en la creación de códigos numéricos para auditorías específicas.
+## 🤖 El Poder de los 8 Motores de Generación
 
-Modo de Auditoría: Permite a un usuario verificar si su propia contraseña se encuentra en una de las listas generadas, promoviendo la seguridad defensiva.
+Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar uno, varios o todos a la vez.
 
-Lógica de Generación Avanzada: Implementa patrones de contraseñas modernos y comunes como [AñoActual][NombreEnLeetSpeak][Símbolo].
+| Motor | Descripción                                         | Ejemplo de Contraseña Generada        |
+| :---- | :-------------------------------------------------- | :------------------------------------ |
+| **1** | **Combinaciones Simples:** Estilo RockYou clásico.      | `daniel1981`, `sandybaez`             |
+| **2** | **Patrones Complejos:** Estilo WiFi/corporativo.      | `kasa-baez/38`, `Daniel_Ugalde#2024`  |
+| **3** | **Leetspeak Moderno:** Patrón de `Año+NombreLeet`.     | `2025D4n13l%`                         |
+| **4** | **Centrado en Hijos:** Usa el año e iniciales del hijo.| `2014Jiub$`                           |
+| **5** | **Permutación de Iniciales:** Teje iniciales y números.| `Dsb1676` (Daniel, Sandy, Bastian...) |
+| **6** | **"Mangler" de Frases:** Destroza frases con Leetspeak.| `R3d$S3gura2024!#`                     |
+| **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Daniel-Ugalde1981!`                  |
+| **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `S76b96j14` (Sandy76, Bastian96...)   |
 
-Mutaciones Inteligentes: Aplica automáticamente variaciones de mayúsculas/minúsculas (test, Test, TEST) y transformaciones Leetspeak (daniel -> d4n13l).
+## 🎬 Demostración
 
-Filtros de Eficiencia: Permite establecer una longitud mínima y máxima para las contraseñas, optimizando el tamaño de la wordlist y el tiempo de auditoría.
+*Aquí puedes insertar un GIF que muestre la herramienta en acción. ¡Es la mejor forma de venderla!*
+`[placeholder for demo.gif]`
 
-Código Abierto y sin Dependencias: Escrito en Python puro, fácil de entender, modificar y ejecutar en cualquier sistema.
-Instalación
-Cerbero no requiere instalación compleja.
-Requisitos:
-Python 3.6 o superior.
-Pasos:
-Clona el repositorio en tu máquina local:
+## 🛠️ Instalación y Uso
 
-Bash
+Cerbero no requiere instalación. Solo necesitas Python 3.7 o superior.
+
+**1. Clona el repositorio:**
+```bash
 git clone https://github.com/syruxst/cerbero.git
-Navega al directorio del proyecto:
-
+2. Navega al directorio:
+code
 Bash
 cd cerbero
-¡Y eso es todo! Ya estás listo para usar la herramienta.
-Modo de Uso
-Ejecuta el script desde tu terminal para acceder al menú principal.
-
+3. Ejecuta el script:
+code
 Bash
 python cerbero.py
-
-Aparecerá un menú con las siguientes opciones:
-
-1. Modo Completo (Generar Wordlist de Contraseñas)
-Inicia un cuestionario detallado para recopilar información sobre el objetivo. Al finalizar, genera miles de contraseñas candidatas y las filtra por longitud antes de guardarlas.
-2. Modo Numérico (Generar PINs / Códigos)
-Diseñado para auditar sistemas con contraseñas exclusivamente numéricas. Pide datos numéricos (fechas, RUT, etc.) y genera combinaciones dentro de un rango de longitud.
-3. Modo Nombres de Usuario (Generar Userlist)
-Pide información básica (nombres, apellidos, apodo) y genera una lista de nombres de usuario potenciales siguiendo patrones corporativos y de plataformas web comunes.
-4. Modo Auditoría (Buscar tu contraseña o usuario en una lista)
-Una herramienta defensiva. Te pide la ruta a una wordlist y una contraseña, y te informa si esa contraseña existe en la lista, ayudándote a evaluar su seguridad.
-5. Salir
-Termina la ejecución del programa.
-El programa volverá al menú principal después de cada acción (excepto "Salir") para un flujo de trabajo continuo.
-
-Advertencia de Uso Ético
+Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
+⚠️ Advertencia de Uso Ético
 [!] IMPORTANTE: Cerbero es una herramienta creada con fines educativos y para ser utilizada exclusivamente en auditorías de seguridad y pentesting dentro de un marco legal y con autorización explícita del propietario del sistema. El uso no autorizado de esta herramienta para intentar acceder a sistemas ajenos es ilegal. El autor no se hace responsable del mal uso de este programa.
-Cómo Contribuir
-¡Las contribuciones son bienvenidas! Si tienes ideas para nuevas reglas de generación, optimizaciones o correcciones, no dudes en participar.
-Haz un "Fork" del proyecto.
-Crea una nueva rama para tu funcionalidad (git checkout -b feature/AmazingFeature).
-Haz "Commit" de tus cambios (git commit -m 'Add some AmazingFeature').
-Haz "Push" a la rama (git push origin feature/AmazingFeature).
-Abre un "Pull Request".
-Licencia
+🤝 Cómo Contribuir
+¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos motores, optimizaciones o correcciones, no dudes en participar.
+Haz un Fork del proyecto.
+Crea una nueva rama (git checkout -b feature/AmazingFeature).
+Haz Commit de tus cambios (git commit -m 'Add some AmazingFeature').
+Haz Push a la rama (git push origin feature/AmazingFeature).
+Abre un Pull Request.
+📄 Licencia
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
-Autor
-Daniel Ugalde - https://github.com/syruxst/cerbero
+👤 Autor
+Daniel Ugalde - GitHub @syruxst

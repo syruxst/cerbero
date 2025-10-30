@@ -1,7 +1,7 @@
 # Cerbero - Suite de Perfilado de Credenciales
 
 <p align="center">
-  <img src="https://art.syrux.es/cerbero.png" alt="Cerbero Logo">
+  <img src="cerbero.png" alt="Cerbero Logo">
 </p>
 
 <p align="center">
@@ -51,7 +51,6 @@ Cerbero no requiere instalación. Solo necesitas Python 3.7 o superior.
 
 ```bash
 1. Clona el repositorio:
-
 git clone https://github.com/syruxst/cerbero.git
 
 2. Navega al directorio:

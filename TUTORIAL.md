@@ -67,6 +67,8 @@ que las terminales entienden como colores.
 ¿Por qué usar una clase? Para organizar. Ahora, cada vez que queremos usar el color rojo, 
 no tenemos que recordar el código \033[91m. Simplemente escribimos Colors.RED. Es mucho más limpio y fácil de leer.
 
+--- 
+
 ## Capítulo 2: El Corazón de Cerbero - Los Motores de Generación
 Aquí es donde ocurre la magia. Cerbero no tiene una, sino ocho lógicas de ataque diferentes, 
 cada una encapsulada en su propia función "motor". Vamos a analizar dos de los más interesantes.
@@ -88,8 +90,50 @@ def motor_4_centrado_en_hijos(info, text_words, numeric_words, symbols, add_func
                 initials_cased = initials.capitalize()
                 # 4. Generar todas las combinaciones y añadirlas
                 for sym in symbols:
-                    count += add_func(f"{year}{initials_cased}{sym}")      # ej: 2014Jiub$
-                    count += add_func(f"{initials_cased}{year}{sym}")      # ej: Jiub2014$
-                    count += add_func(f"{initials_cased}{sym}{year}")      # ej: Jiub$2014
+                    count += add_func(f"{year}{initials_cased}{sym}")      # ej: 2017Tiub$
+                    count += add_func(f"{initials_cased}{year}{sym}")      # ej: Tiub2017$
+                    count += add_func(f"{initials_cased}{sym}{year}")      # ej: Tiub$2017
+    return count
+```
+
+### Puntos clave para modificar:
+¿Quieres añadir el año corto? Simplemente añade year_short = year[2:] y úsalo en las combinaciones.
+¿Quieres probar con todas las iniciales en mayúsculas? Añade initials_upper = initials.upper() y genera más contraseñas con él.
+¿Quieres añadir el día de nacimiento? Extráelo de hijo["fecha_nacimiento"].day y añádelo a las combinaciones.
+### 2.2. El "Jefe Final": motor_8_cadenas_biograficas
+Este es el motor más complejo y potente. Implementa la lógica S72b95t17.
+
+```python
+def motor_8_cadenas_biograficas(info, text_words, numeric_words, symbols, add_func):
+    count = 0
+    people = [] # 1. Lista para guardar los "pares biográficos"
+
+    # 2. Recolectar los datos de la pareja e hijos
+    pareja = info.get("familia", {}).get("pareja", {})
+    if pareja.get("nombres") and pareja.get("fecha_nacimiento"):
+        people.append({"initial": pareja["nombres"], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
+    
+    for hijo in info.get("familia", {}).get("hijos", []):
+        if hijo.get("nombres") and hijo.get("fecha_nacimiento"):
+            people.append({"initial": hijo["nombres"], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
+
+    if len(people) < 2: # 3. Salir si no hay suficientes datos
+        # ...
+        return 0
+        
+    # 4. Generar permutaciones del ORDEN de las personas
+    for length in range(2, len(people) + 1):
+        for p_people in itertools.permutations(people, length):
+            
+            # 5. Para cada orden, preparar las variaciones de CADA eslabón
+            chunk_variations_for_permutation = []
+            for person in p_people:
+                initial_lower = person['initial'].lower(); initial_upper = person['initial'].upper(); year = person['year_short']
+                # Cada eslabón tiene dos posibles variaciones: s76 y S76
+                chunk_variations_for_permutation.append([f"{initial_lower}{year}", f"{initial_upper}{year}"])
+            
+            # 6. La magia: itertools.product crea TODAS las combinaciones posibles
+            for combo in itertools.product(*chunk_variations_for_permutation):
+                count += add_func("".join(combo))
     return count
 ```

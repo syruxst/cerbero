@@ -42,7 +42,7 @@ def get_input(prompt, allow_empty=True, normalize=False):
             return normalize_string(value) if normalize and value else value
         print(f"{Colors.YELLOW}Este campo no puede estar vacío.{Colors.RESET}")
 ```
-## Desmontemos esta "receta":
+### Desmontemos esta "receta":
 
 def get_input(...): Define una función llamada get_input. Los elementos entre paréntesis son los "ingredientes" que necesita la receta para funcionar. prompt es el texto de la pregunta que queremos hacer.
 while True:: Esto crea un bucle infinito. Es como decir "sigue haciendo esto para siempre... hasta que te diga que pares".
@@ -59,4 +59,37 @@ class Colors:
     RED = "\033[91m"
     GREEN = "\033[92m"
     # ... y así sucesivamente
+```
+
+class Colors:: Define un "molde" llamado Colors.
+Dentro del molde, hemos creado variables (RESET, RED, etc.) que contienen códigos especiales 
+que las terminales entienden como colores.
+¿Por qué usar una clase? Para organizar. Ahora, cada vez que queremos usar el color rojo, 
+no tenemos que recordar el código \033[91m. Simplemente escribimos Colors.RED. Es mucho más limpio y fácil de leer.
+
+## Capítulo 2: El Corazón de Cerbero - Los Motores de Generación
+Aquí es donde ocurre la magia. Cerbero no tiene una, sino ocho lógicas de ataque diferentes, 
+cada una encapsulada en su propia función "motor". Vamos a analizar dos de los más interesantes.
+### 2.1. Anatomía de un Motor: motor_4_centrado_en_hijos
+Este motor implementa la lógica AñoHijo + InicialesHijo + Símbolo.
+
+```python
+def motor_4_centrado_en_hijos(info, text_words, numeric_words, symbols, add_func):
+    count = 0
+    # 1. Recorrer la lista de hijos que el usuario introdujo
+    for hijo in info.get("familia", {}).get("hijos", []):
+        # 2. Verificar si tenemos los datos necesarios (fecha y nombre)
+        if hijo.get("fecha_nacimiento") and hijo.get("nombres"):
+            # 3. Extraer y formatear los datos
+            year = str(hijo["fecha_nacimiento"].year)
+            initials = "".join([n for n in hijo["nombres"] if n] + [a for a in hijo.get("apellidos", []) if a]).lower()
+            
+            if initials:
+                initials_cased = initials.capitalize()
+                # 4. Generar todas las combinaciones y añadirlas
+                for sym in symbols:
+                    count += add_func(f"{year}{initials_cased}{sym}")      # ej: 2014Jiub$
+                    count += add_func(f"{initials_cased}{year}{sym}")      # ej: Jiub2014$
+                    count += add_func(f"{initials_cased}{sym}{year}")      # ej: Jiub$2014
+    return count
 ```

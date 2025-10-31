@@ -58,7 +58,7 @@ cd cerbero
 
 3. Ejecuta el script:
 python cerbero.py
-
+```
 Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
 
 ⚠️ Advertencia de Uso Ético

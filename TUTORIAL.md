@@ -22,6 +22,22 @@ BANNER = f"""{Colors.MAGENTA}
 {Colors.RESET}"""
 
 LEETSPEAK_MAP = {'a': ['4', '@'], 'e': ['3'], ...}
-BANNER: Es una "caja" (variable) que contiene el logo gigante en arte ASCII. En lugar de escribir el logo cada vez que lo necesitamos, simplemente llamamos a la caja BANNER.
-LEETSPEAK_MAP: Es una caja especial llamada diccionario. Funciona como un diccionario real: tienes una "palabra" (la clave, ej: 'a') y su "definición" (el valor, ej: ['4', '@']). Así, podemos buscar fácilmente las sustituciones para cada letra.
+BANNER: Es una "caja" (variable) que contiene el logo gigante en arte ASCII. 
+En lugar de escribir el logo cada vez que lo necesitamos, simplemente llamamos a la caja BANNER.
+LEETSPEAK_MAP: Es una caja especial llamada diccionario. 
+Funciona como un diccionario real: tienes una "palabra" (la clave, ej: 'a') y su "definición" (el valor, ej: ['4', '@']). Así, podemos buscar fácilmente las sustituciones para cada letra.
+```
+## 2. Funciones: "Mini-Programas" Reutilizables
+Una función es como una receta de cocina. Es un conjunto de instrucciones que 
+realiza una tarea específica. En lugar de escribir los mismos pasos una y otra vez, 
+simplemente "llamas a la receta" por su nombre. En Python, se definen con def.
+Veamos una de las funciones más importantes de Cerbero, get_input:
+```
+def get_input(prompt, allow_empty=True, normalize=False):
+    full_prompt = f"{Colors.BLUE}{prompt}{Colors.RESET}"
+    while True:
+        value = input(full_prompt).strip()
+        if value or allow_empty: 
+            return normalize_string(value) if normalize and value else value
+        print(f"{Colors.YELLOW}Este campo no puede estar vacío.{Colors.RESET}")
 ```

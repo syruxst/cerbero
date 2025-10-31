@@ -15,3 +15,13 @@ Todo gran edificio necesita cimientos sólidos. En programación, esos cimientos
 Piensa en una variable como una caja con una etiqueta. Puedes guardar cualquier cosa dentro (un texto, un número) y luego referirte a ella por su etiqueta.
 
 En Cerbero, usamos variables para todo. Por ejemplo, al principio del código, vemos esto:
+
+```python
+BANNER = f"""{Colors.MAGENTA}
+██████╗ ...
+{Colors.RESET}"""
+
+LEETSPEAK_MAP = {'a': ['4', '@'], 'e': ['3'], ...}
+BANNER: Es una "caja" (variable) que contiene el logo gigante en arte ASCII. En lugar de escribir el logo cada vez que lo necesitamos, simplemente llamamos a la caja BANNER.
+LEETSPEAK_MAP: Es una caja especial llamada diccionario. Funciona como un diccionario real: tienes una "palabra" (la clave, ej: 'a') y su "definición" (el valor, ej: ['4', '@']). Así, podemos buscar fácilmente las sustituciones para cada letra.
+```

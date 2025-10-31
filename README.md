@@ -1,7 +1,7 @@
 # Cerbero - Suite de Perfilado de Credenciales
 
 <p align="center">
-  <img src="cerbero.png" alt="Cerbero Logo">
+  <img src="CapturaCerbero.png" alt="Cerbero Logo">
 </p>
 
 <p align="center">

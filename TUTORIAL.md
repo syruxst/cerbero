@@ -1,5 +1,6 @@
-Guía Completa CERBERO
-
+Guía Completa en Formato Markdown (Corregido)
+code
+Markdown
 # De Cero a Hacker con Python: Desmontando Cerbero
 
 ¡Bienvenido/a a la guía definitiva para entender y modificar Cerbero! Si alguna vez has querido aprender Python creando una herramienta de ciberseguridad real, estás en el lugar correcto. No necesitas experiencia previa en programación, solo curiosidad y ganas de aprender.
@@ -71,7 +72,7 @@ def motor_4_centrado_en_hijos(info, text_words, numeric_words, symbols, add_func
         if hijo.get("fecha_nacimiento") and hijo.get("nombres"):
             # 3. Extraer y formatear los datos
             year = str(hijo["fecha_nacimiento"].year)
-            initials = "".join([n for n in hijo["nombres"] if n] + [a for a in hijo.get("apellidos", []) if a]).lower()
+            initials = "".join([n[0] for n in hijo["nombres"] if n] + [a[0] for a in hijo.get("apellidos", []) if a]).lower()
             
             if initials:
                 initials_cased = initials.capitalize()
@@ -96,11 +97,11 @@ def motor_8_cadenas_biograficas(info, text_words, numeric_words, symbols, add_fu
     # 2. Recolectar los datos de la pareja e hijos
     pareja = info.get("familia", {}).get("pareja", {})
     if pareja.get("nombres") and pareja.get("fecha_nacimiento"):
-        people.append({"initial": pareja["nombres"], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
+        people.append({"initial": pareja["nombres"][0][0], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
     
     for hijo in info.get("familia", {}).get("hijos", []):
         if hijo.get("nombres") and hijo.get("fecha_nacimiento"):
-            people.append({"initial": hijo["nombres"], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
+            people.append({"initial": hijo["nombres"][0][0], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
 
     if len(people) < 2: # 3. Salir si no hay suficientes datos
         # ...

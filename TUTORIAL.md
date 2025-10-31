@@ -137,3 +137,64 @@ def motor_8_cadenas_biograficas(info, text_words, numeric_words, symbols, add_fu
                 count += add_func("".join(combo))
     return count
 ```
+
+Este motor utiliza itertools, una de las librerías más poderosas de Python para crear combinaciones y permutaciones complejas. Entenderlo es entender el corazón de la generación de contraseñas avanzadas.
+
+---
+## Capítulo 3: El Cerebro Organizador - run_full_mode y la Lógica Principal
+Tener muchos motores es genial, pero necesitas un "director de orquesta" que decida cuándo y cómo se ejecutan. Esa es la función run_full_mode.
+### 3.1. El Cuestionario Inteligente
+Al principio de run_full_mode, verás este bloque:
+
+```python
+engine_dependencies = {'1': ['principal', ...], '8': ['pareja', 'hijos']}
+    # ...
+    engines_to_run = [e.strip() for e in engines_input.lower().split(',')]
+    
+    required_sections = set()
+    if 'all' in engines_to_run: 
+        required_sections = {'principal', 'pareja', 'hijos', 'otros', 'mangle', 'familia'}
+    else:
+        for eng in engines_to_run:
+            if eng in engine_dependencies:
+                required_sections.update(engine_dependencies[eng])
+    
+    info = gather_smart_information(required_sections)
+```
+1. engine_dependencies: Es un diccionario que mapea cada motor a los "tipos de datos" que necesita. El Motor 8, por ejemplo, solo necesita datos de pareja e hijos.
+2. El código revisa qué motores seleccionaste y construye una lista (required_sections) de todos los tipos de datos únicos que se necesitarán.
+3. Finalmente, llama a gather_smart_information y le pasa esa lista, para que solo haga las preguntas relevantes.
+### 3.2. El Bucle Principal y el Manejo de Ctrl+C
+La función main es el punto de entrada de todo el programa. Observa su estructura:
+
+```python
+def main():
+    print_presentation()
+    try:
+        while True:
+            # 1. Muestra el menú y pide una opción
+            # ...
+            if choice == '1': run_full_mode()
+            # ...
+            elif choice == '5': break # Solo 'Salir' rompe el bucle
+            # ...
+    except KeyboardInterrupt:
+        # 2. Si se presiona Ctrl+C en cualquier momento...
+        print("\n\n[INFO] Salida solicitada por el usuario...")
+        sys.exit(0) # ...el programa sale de forma limpia.
+```
+Esta estructura try...except es un pilar de la programación robusta en Python. 
+Permite que tu programa maneje errores inesperados (o interrupciones del usuario) con elegancia, 
+en lugar de simplemente "romperse".
+
+---
+## ¡Ahora es tu turno!
+Has visto los cimientos, la lógica de los motores y la estructura principal. Ahora tienes el conocimiento para empezar a experimentar.
+
+Ideas para empezar a modificar:
+
+1. __Añade un Símbolo a un Motor__: Ve al motor_1_combinaciones_simples y añade + symbols[0] al final de una de las combinaciones. ¡Acabas de añadir una nueva regla!
+2. __Crea un Nuevo Motor (Motor 9)__: Copia y pega el motor_1, renómbralo a motor_9_mi_logica, y modifica las combinaciones para que haga algo nuevo. ¡No olvides añadirlo a la lista engine_functions!
+3. __Cambia los Colores__: Ve a la clase Colors al principio y cambia el código de Colors.GREEN por el de Colors.CYAN (\033[96m). ¡Acabas de personalizar la interfaz!
+
+El código abierto es una invitación a explorar, aprender y construir. Cerbero es ahora tu laboratorio. ¡Diviértete!

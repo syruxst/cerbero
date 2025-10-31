@@ -192,7 +192,7 @@ en lugar de simplemente "romperse".
 ## ¡Ahora es tu turno!
 Has visto los cimientos, la lógica de los motores y la estructura principal. Ahora tienes el conocimiento para empezar a experimentar.
 
-Ideas para empezar a modificar:
+__Ideas para empezar a modificar__:
 
 1. __Añade un Símbolo a un Motor__: Ve al motor_1_combinaciones_simples y añade + symbols[0] al final de una de las combinaciones. ¡Acabas de añadir una nueva regla!
 2. __Crea un Nuevo Motor (Motor 9)__: Copia y pega el motor_1, renómbralo a motor_9_mi_logica, y modifica las combinaciones para que haga algo nuevo. ¡No olvides añadirlo a la lista engine_functions!

@@ -44,13 +44,14 @@ def get_input(prompt, allow_empty=True, normalize=False):
 ```
 ### Desmontemos esta "receta":
 
-def get_input(...): Define una función llamada get_input. Los elementos entre paréntesis son los "ingredientes" que necesita la receta para funcionar. prompt es el texto de la pregunta que queremos hacer.
-while True:: Esto crea un bucle infinito. Es como decir "sigue haciendo esto para siempre... hasta que te diga que pares".
-value = input(full_prompt).strip(): Esta es la instrucción clave. input() es una función de Python que muestra un mensaje en la pantalla y espera a que el usuario escriba algo y presione Enter. .strip() es un truco que elimina espacios en blanco al principio y al final, ¡muy útil para limpiar la entrada!
-if value or allow_empty:: Esto es una condición. Es como preguntar "¿el usuario escribió algo, o le permitimos dejarlo en blanco?".
-return ...: Esta es la instrucción para "parar" el bucle y devolver el resultado. La receta ha terminado y nos entrega el plato final (el texto que el usuario escribió).
-Si la condición if no se cumple (el usuario no escribió nada y no estaba permitido), el bucle continúa y vuelve a pedir la información.
-1.3. Clases: El "Molde" para Crear Objetos
+1. __def get_input(...)__: Define una función llamada get_input. Los elementos entre paréntesis son los "ingredientes" que necesita la receta para funcionar. prompt es el texto de la pregunta que queremos hacer.
+2. __while True:__: Esto crea un bucle infinito. Es como decir "sigue haciendo esto para siempre... hasta que te diga que pares".
+3. __value = input(full_prompt).strip()__: Esta es la instrucción clave. input() es una función de Python que muestra un mensaje en la pantalla y espera a que el usuario escriba algo y presione Enter. .strip() es un truco que elimina espacios en blanco al principio y al final, ¡muy útil para limpiar la entrada!
+4. __if value or allow_empty:__: Esto es una condición. Es como preguntar "¿el usuario escribió algo, o le permitimos dejarlo en blanco?".
+5. __return ...__: Esta es la instrucción para "parar" el bucle y devolver el resultado. La receta ha terminado y nos entrega el plato final (el texto que el usuario escribió).
+6. Si la condición if no se cumple (el usuario no escribió nada y no estaba permitido), el bucle continúa y vuelve a pedir la información.
+
+### 1.3. Clases: El "Molde" para Crear Objetos
 Una clase es como el plano o molde para crear algo. En Cerbero, usamos una clase muy simple pero poderosa para manejar los colores:
 
 ```python

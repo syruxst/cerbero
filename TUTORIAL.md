@@ -62,10 +62,10 @@ class Colors:
     # ... y así sucesivamente
 ```
 
-class Colors:: Define un "molde" llamado Colors.
-Dentro del molde, hemos creado variables (RESET, RED, etc.) que contienen códigos especiales 
+* class Colors:: Define un "molde" llamado Colors. 
+* Dentro del molde, hemos creado variables (RESET, RED, etc.) que contienen códigos especiales 
 que las terminales entienden como colores.
-¿Por qué usar una clase? Para organizar. Ahora, cada vez que queremos usar el color rojo, 
+* ¿Por qué usar una clase? Para organizar. Ahora, cada vez que queremos usar el color rojo, 
 no tenemos que recordar el código \033[91m. Simplemente escribimos Colors.RED. Es mucho más limpio y fácil de leer.
 
 --- 
@@ -98,9 +98,9 @@ def motor_4_centrado_en_hijos(info, text_words, numeric_words, symbols, add_func
 ```
 
 ### Puntos clave para modificar:
-¿Quieres añadir el año corto? Simplemente añade year_short = year[2:] y úsalo en las combinaciones.
-¿Quieres probar con todas las iniciales en mayúsculas? Añade initials_upper = initials.upper() y genera más contraseñas con él.
-¿Quieres añadir el día de nacimiento? Extráelo de hijo["fecha_nacimiento"].day y añádelo a las combinaciones.
+* ¿Quieres añadir el año corto? Simplemente añade year_short = year[2:] y úsalo en las combinaciones.
+* ¿Quieres probar con todas las iniciales en mayúsculas? Añade initials_upper = initials.upper() y genera más contraseñas con él.
+* ¿Quieres añadir el día de nacimiento? Extráelo de hijo["fecha_nacimiento"].day y añádelo a las combinaciones.
 ### 2.2. El "Jefe Final": motor_8_cadenas_biograficas
 Este es el motor más complejo y potente. Implementa la lógica S72b95t17.
 

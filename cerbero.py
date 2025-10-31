@@ -301,7 +301,15 @@ def generate_usernames(info):
 def run_full_mode():
     print(f"\n{Colors.CYAN}--- MODO COMPLETO: WORDLIST AVANZADA ---{Colors.RESET}\n")
     engine_dependencies = {'1': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '2': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '3': ['principal'], '4': ['hijos'], '5': ['principal', 'pareja', 'hijos'], '6': ['mangle', 'principal'], '7': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '8': ['pareja', 'hijos']}
-    print("Motores de Generación Disponibles:"); print("  1. Combinaciones simples (daniel1981)"); print("  2. Patrones complejos (daniel-ugalde/1981)"); print("  3. Leetspeak moderno (2025D4n13l%)"); print("  4. Centrado en Hijos (2014Jiub$)"); print("  5. Permutación de iniciales (Duj1681)"); print("  6. 'Mangler' de frases (R3d$S3gura2024!#)"); print("  7. Combinatorio creativo (Daniel-Ugalde1981!)"); print(f"  8. Cadenas biográficas (S76b96j14)")
+    print("Motores de Generación Disponibles:")
+    print("  1. Combinaciones simples (ej: maria1995)")
+    print("  2. Patrones complejos (ej: juan-perez/92)")
+    print("  3. Leetspeak moderno (ej: 2025R0b3rt0!)")
+    print("  4. Centrado en Hijos (ej: 2018Sgl#)")
+    print("  5. Permutación de iniciales (ej: Pml2590)")
+    print("  6. 'Mangler' de frases (ej: M1Cl4v32024*)")
+    print("  7. Combinatorio creativo (ej: Amor-Ana99!)")
+    print(f"  8. Cadenas biográficas (ej: C80l05m10)")    
     engines_input = get_input("¿Qué motores deseas ejecutar? (ej: 1,3,8 o 'all' para todos) [all]: ") or "all"
     engines_to_run = [e.strip() for e in engines_input.lower().split(',')]
     required_sections = set()

@@ -66,11 +66,11 @@ Aparecerá un menú interactivo que te guiará a través de los diferentes modos
 
 ## 🤝 Cómo Contribuir
 ¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos motores, optimizaciones o correcciones, no dudes en participar.
-Haz un Fork del proyecto.
-Crea una nueva rama (git checkout -b feature/AmazingFeature).
-Haz Commit de tus cambios (git commit -m 'Add some AmazingFeature').
-Haz Push a la rama (git push origin feature/AmazingFeature).
-Abre un Pull Request.
+* Haz un Fork del proyecto.
+* Crea una nueva rama (git checkout -b feature/AmazingFeature).
+* Haz Commit de tus cambios (git commit -m 'Add some AmazingFeature').
+* Haz Push a la rama (git push origin feature/AmazingFeature).
+* Abre un Pull Request.
 
 ## 📄 Licencia
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.

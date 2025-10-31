@@ -1,14 +1,24 @@
-Guía Completa: "De Cero a Hacker con Python: Desmontando Cerbero"
-De Cero a Hacker con Python: Desmontando Cerbero
+Guía Completa CERBERO
+
+# De Cero a Hacker con Python: Desmontando Cerbero
+
 ¡Bienvenido/a a la guía definitiva para entender y modificar Cerbero! Si alguna vez has querido aprender Python creando una herramienta de ciberseguridad real, estás en el lugar correcto. No necesitas experiencia previa en programación, solo curiosidad y ganas de aprender.
+
 Esta guía te llevará de la mano a través del código de Cerbero, explicando cada pieza como si fuera un bloque de LEGO. Al final, no solo entenderás cómo funciona la herramienta, sino que también tendrás las habilidades para modificarla y crear tus propias lógicas de ataque.
-Capítulo 1: Los Cimientos del Código (Conceptos Básicos de Python)
+
+---
+
+## Capítulo 1: Los Cimientos del Código (Conceptos Básicos de Python)
+
 Todo gran edificio necesita cimientos sólidos. En programación, esos cimientos son las variables, las funciones y las estructuras de control. Vamos a ver cómo Cerbero los utiliza.
-1.1. Variables: Las "Cajas" para Guardar Información
+
+### 1.1. Variables: Las "Cajas" para Guardar Información
+
 Piensa en una variable como una caja con una etiqueta. Puedes guardar cualquier cosa dentro (un texto, un número) y luego referirte a ella por su etiqueta.
+
 En Cerbero, usamos variables para todo. Por ejemplo, al principio del código, vemos esto:
-code
-Python
+
+```python
 BANNER = f"""{Colors.MAGENTA}
 ██████╗ ...
 {Colors.RESET}"""
@@ -61,7 +71,7 @@ def motor_4_centrado_en_hijos(info, text_words, numeric_words, symbols, add_func
         if hijo.get("fecha_nacimiento") and hijo.get("nombres"):
             # 3. Extraer y formatear los datos
             year = str(hijo["fecha_nacimiento"].year)
-            initials = "".join([n[0] for n in hijo["nombres"] if n] + [a[0] for a in hijo.get("apellidos", []) if a]).lower()
+            initials = "".join([n for n in hijo["nombres"] if n] + [a for a in hijo.get("apellidos", []) if a]).lower()
             
             if initials:
                 initials_cased = initials.capitalize()
@@ -86,11 +96,11 @@ def motor_8_cadenas_biograficas(info, text_words, numeric_words, symbols, add_fu
     # 2. Recolectar los datos de la pareja e hijos
     pareja = info.get("familia", {}).get("pareja", {})
     if pareja.get("nombres") and pareja.get("fecha_nacimiento"):
-        people.append({"initial": pareja["nombres"][0][0], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
+        people.append({"initial": pareja["nombres"], "year_short": str(pareja["fecha_nacimiento"].year)[2:]})
     
     for hijo in info.get("familia", {}).get("hijos", []):
         if hijo.get("nombres") and hijo.get("fecha_nacimiento"):
-            people.append({"initial": hijo["nombres"][0][0], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
+            people.append({"initial": hijo["nombres"], "year_short": str(hijo["fecha_nacimiento"].year)[2:]})
 
     if len(people) < 2: # 3. Salir si no hay suficientes datos
         # ...
@@ -159,5 +169,4 @@ Ideas para empezar a modificar:
 Añade un Símbolo a un Motor: Ve al motor_1_combinaciones_simples y añade + symbols[0] al final de una de las combinaciones. ¡Acabas de añadir una nueva regla!
 Crea un Nuevo Motor (Motor 9): Copia y pega el motor_1, renómbralo a motor_9_mi_logica, y modifica las combinaciones para que haga algo nuevo. ¡No olvides añadirlo a la lista engine_functions!
 Cambia los Colores: Ve a la clase Colors al principio y cambia el código de Colors.GREEN por el de Colors.CYAN (\033[96m). ¡Acabas de personalizar la interfaz!
-El código abierto es una invitación a explorar, aprender y construir. Cerbero es ahora tu laboratorio. ¡Diviértete y construir. Cerbero es ahora tu laboratorio. ¡Diviértete!
-
+El código abierto es una invitación a explorar, aprender y construir. Cerbero es ahora tu laboratorio. ¡Diviértete!

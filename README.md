@@ -58,20 +58,22 @@ cd cerbero
 
 3. Ejecuta el script:
 python cerbero.py
-```
+ ```
 Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
 
-⚠️ Advertencia de Uso Ético
+## ⚠️ Advertencia de Uso Ético
 [!] IMPORTANTE: Cerbero es una herramienta creada con fines educativos y para ser utilizada exclusivamente en auditorías de seguridad y pentesting dentro de un marco legal y con autorización explícita del propietario del sistema. El uso no autorizado de esta herramienta para intentar acceder a sistemas ajenos es ilegal. El autor no se hace responsable del mal uso de este programa.
 
-🤝 Cómo Contribuir
+## 🤝 Cómo Contribuir
 ¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos motores, optimizaciones o correcciones, no dudes en participar.
 Haz un Fork del proyecto.
 Crea una nueva rama (git checkout -b feature/AmazingFeature).
 Haz Commit de tus cambios (git commit -m 'Add some AmazingFeature').
 Haz Push a la rama (git push origin feature/AmazingFeature).
 Abre un Pull Request.
-📄 Licencia
+
+## 📄 Licencia
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
-👤 Autor
+
+## 👤 Autor
 Daniel Ugalde - GitHub @syruxst

@@ -5,7 +5,6 @@ import sys
 import os
 import unicodedata
 
-# --- Paleta de Colores para la Interfaz ---
 class Colors:
     RESET = "\033[0m"
     RED = "\033[91m"
@@ -35,7 +34,6 @@ El autor no se hace responsable por el mal uso de este programa.
 
 LEETSPEAK_MAP = {'a': ['4', '@'], 'e': ['3'], 'i': ['1', '!'], 'o': ['0'], 's': ['5', '$'], 't': ['7']}
 
-# --- FUNCIONES GLOBALES Y UTILIDADES ---
 def print_presentation():
     os.system('cls' if os.name == 'nt' else 'clear')
     for char in BANNER: sys.stdout.write(char); sys.stdout.flush(); time.sleep(0.001)
@@ -73,7 +71,6 @@ def full_leetspeak(text):
         if replacements: text = text.replace(char, replacements[0])
     return text
 
-# --- SECCIÓN DE RECOLECCIÓN DE DATOS (gather_*) ---
 def gather_smart_information(required_sections):
     print(f"{Colors.CYAN}--- Recopilación de Información Personal (deja en blanco si no aplica) ---{Colors.RESET}")
     info = { "persona_principal": {}, "familia": {"pareja": {}, "hijos": []}, "otros_datos": {} }
@@ -130,7 +127,6 @@ def gather_username_info():
     info['birth_year'] = str(birth_date.year) if birth_date else None
     return info
 
-# --- SECCIÓN DE GENERACIÓN Y MOTORES (generate_*, apply_*, motor_*) ---
 def generate_base_words(info):
     words = set()
     def extract_words(data):
@@ -297,7 +293,6 @@ def generate_usernames(info):
         for suffix in numeric_suffixes: usernames.add(f"{user}{suffix}")
     return list(filter(None, usernames))
 
-# --- SECCIÓN DE EJECUCIÓN DE MODOS (run_*) ---
 def run_full_mode():
     print(f"\n{Colors.CYAN}--- MODO COMPLETO: WORDLIST AVANZADA ---{Colors.RESET}\n")
     engine_dependencies = {'1': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '2': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '3': ['principal'], '4': ['hijos'], '5': ['principal', 'pareja', 'hijos'], '6': ['mangle', 'principal'], '7': ['principal', 'pareja', 'hijos', 'otros', 'familia'], '8': ['pareja', 'hijos']}

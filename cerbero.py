@@ -393,6 +393,32 @@ def run_audit_mode():
             print("Es una buena señal, pero recuerda mantener siempre buenas prácticas de seguridad.")
         print(f"{Colors.RESET}{'-' * 50}")
 
+def run_merge_mode():
+    print(f"\n{Colors.CYAN}--- MODO UNIR WORDLISTS ---{Colors.RESET}\n")
+    input_files_str = get_input("Introduce las rutas de los archivos a unir (separadas por coma): ")
+    if not input_files_str:
+        print(f"{Colors.YELLOW}[AVISO]{Colors.RESET} No se especificaron archivos."); return
+    file_paths = [path.strip() for path in input_files_str.split(',')]
+    unique_passwords = set(); total_lines_read = 0
+    print(f"\n{Colors.YELLOW}[INFO]{Colors.RESET} Procesando archivos...")
+    for path in file_paths:
+        if not os.path.exists(path):
+            print(f"  {Colors.YELLOW}[AVISO]{Colors.RESET} El archivo '{path}' no se encontró y será omitido.")
+            continue
+        try:
+            with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                lines = [line.strip() for line in f if line.strip()]
+                unique_passwords.update(lines); total_lines_read += len(lines)
+                print(f"  {Colors.GREEN}[+]{Colors.RESET} Procesado '{path}', leídas {len(lines):,} líneas.")
+        except Exception as e:
+            print(f"  {Colors.RED}[ERROR]{Colors.RESET} No se pudo leer el archivo '{path}': {e}")
+    print(f"\n{Colors.GREEN}[+]{Colors.RESET} Total de líneas leídas: {total_lines_read:,}")
+    print(f"{Colors.GREEN}[+]{Colors.RESET} Total de contraseñas únicas encontradas: {len(unique_passwords):,}")
+    if not unique_passwords:
+        print(f"{Colors.YELLOW}[AVISO]{Colors.RESET} No se encontraron contraseñas para guardar."); return
+    output_filename = get_input("\nIntroduce el nombre del archivo de salida para la lista unificada: ", allow_empty=False)
+    save_wordlist(list(unique_passwords), output_filename, "contraseñas unificadas")
+
 def main():
     print_presentation()
     try:
@@ -402,18 +428,22 @@ def main():
             print(f"  {Colors.YELLOW}2.{Colors.RESET} Modo Numérico (Generar PINs / Códigos)")
             print(f"  {Colors.YELLOW}3.{Colors.RESET} Modo Nombres de Usuario (Generar Userlist)")
             print(f"  {Colors.YELLOW}4.{Colors.RESET} Modo Auditoría (Buscar tu contraseña en una lista)")
-            print(f"  {Colors.YELLOW}5.{Colors.RESET} Salir")
+            print(f"  {Colors.YELLOW}5.{Colors.RESET} Modo Unir Wordlists (Combinar múltiples listas en una)")
+            print(f"  {Colors.YELLOW}6.{Colors.RESET} Salir")
             choice = get_input("Opción: ")
             if choice == '1': run_full_mode()
             elif choice == '2': run_numeric_mode()
             elif choice == '3': run_username_mode()
             elif choice == '4': run_audit_mode()
-            elif choice == '5': print(f"\n{Colors.CYAN}Saliendo de Cerbero. ¡Hasta la próxima!{Colors.RESET}"); break
+            elif choice == '5': run_merge_mode()
+            elif choice == '6': print(f"\n{Colors.CYAN}Saliendo de Cerbero. ¡Hasta la próxima!{Colors.RESET}"); break
             else: print(f"{Colors.YELLOW}Opción no válida.{Colors.RESET}")
-            if choice in ['1', '2', '3', '4']: get_input("\nPresiona Enter para volver al menú principal...")
+            if choice in ['1', '2', '3', '4', '5']: get_input("\nPresiona Enter para volver al menú principal...")
     except KeyboardInterrupt:
         print(f"\n\n{Colors.YELLOW}[INFO]{Colors.RESET} Salida solicitada por el usuario. ¡Gracias por usar Cerbero!")
         sys.exit(0)
+
+
 
 if __name__ == "__main__":
     main()

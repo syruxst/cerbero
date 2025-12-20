@@ -88,22 +88,22 @@ def stream_generate_and_write(generator: Iterable[str],
 
         # Deduplicación
         if seen_filter is not None:
-            # Soporta tanto set() como BloomDeduplicator (ambos con __contains__)
-            if hasattr(seen_filter, 'add'):
-                # BloomDeduplicator tiene método add() que retorna bool
-                if callable(getattr(seen_filter, 'add')):
-                    is_new = seen_filter.add(pwd)
-                    if not is_new:
-                        continue
-                else:
-                    # Set tradicional
-                    if pwd in seen_filter:
-                        continue
-                    seen_filter.add(pwd)
-            else:
+            # Detectar si es set() normal o BloomDeduplicator
+            # set.add() retorna None, mientras que BloomDeduplicator.add() retorna bool
+            if isinstance(seen_filter, set):
+                # Set tradicional de Python
                 if pwd in seen_filter:
                     continue
                 seen_filter.add(pwd)
+            elif hasattr(seen_filter, 'add') and hasattr(seen_filter, '__contains__'):
+                # BloomDeduplicator o similar que retorna bool en add()
+                is_new = seen_filter.add(pwd)
+                if not is_new:
+                    continue
+            else:
+                # Fallback para otros tipos con __contains__
+                if pwd in seen_filter:
+                    continue
 
         output_writer(pwd)
         written += 1

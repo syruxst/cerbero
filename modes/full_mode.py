@@ -24,6 +24,7 @@ from engines import ENGINE_STREAMS, ENGINE_DESCRIPTIONS
 from ioutils import (
     gather_smart_information,
     generate_base_words,
+    generate_numeric_words,
     open_output_file,
     stream_generate_and_write
 )
@@ -72,6 +73,10 @@ def run_full_mode_interactive():
 
     print(f"\n{Colors.GREEN}[+]{Colors.RESET} Se encontraron {len(base_words):,} palabras base.")
 
+    # Generar números para mostrar información antes de continuar
+    numeric_words_preview = generate_numeric_words(info)
+    print(f"{Colors.GREEN}[+]{Colors.RESET} Se generaron {len(numeric_words_preview):,} variantes numéricas.")
+
     # Configuración de longitudes
     try:
         min_length = int(safe_input(f"Introduce la longitud MÍNIMA [{DEFAULT_MIN_LEN}]: ") or DEFAULT_MIN_LEN)
@@ -103,7 +108,7 @@ def run_full_mode_interactive():
     # Preparar datos para motores
     symbols = DEFAULT_SYMBOLS
     text_words = base_words
-    numeric_words = [w for w in base_words if w.isdigit()]
+    numeric_words = generate_numeric_words(info)
     engines = selected
 
     # Inicializar estadísticas

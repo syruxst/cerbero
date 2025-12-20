@@ -203,3 +203,52 @@ def generate_base_words(info: dict) -> List[str]:
 
     extract_words(info)
     return sorted([w for w in words if not w.isdigit()])
+
+
+def generate_numeric_words(info: dict) -> List[str]:
+    """
+    Extrae números desde la info (días, meses, años, etc.).
+
+    Args:
+        info: Diccionario con información recopilada
+
+    Returns:
+        Lista ordenada de palabras numéricas
+    """
+    numbers: Set[str] = set()
+
+    def extract_numbers(data):
+        if isinstance(data, dict):
+            for key, value in data.items():
+                if key == "fecha_nacimiento" and value:
+                    # Añadir partes de la fecha (día, mes, año corto/largo)
+                    numbers.add(str(value.day))
+                    numbers.add(f"{value.day:02d}")
+                    numbers.add(str(value.month))
+                    numbers.add(f"{value.month:02d}")
+                    numbers.add(str(value.year))
+                    numbers.add(str(value.year)[2:])
+                    # Combinaciones comunes DDMM y MMDD
+                    numbers.add(f"{value.day:02d}{value.month:02d}")
+                    numbers.add(f"{value.month:02d}{value.day:02d}")
+                    # Año completo y últimos 2 dígitos
+                    numbers.add(f"{value.day:02d}{value.month:02d}{str(value.year)[2:]}")
+                elif key == "numeros_importantes" and isinstance(value, list):
+                    # Agregar números importantes de otros_datos
+                    for num in value:
+                        if num and num.strip():
+                            numbers.add(num.strip())
+                else:
+                    extract_numbers(value)
+        elif isinstance(data, list):
+            for item in data:
+                extract_numbers(item)
+        elif isinstance(data, str) and data:
+            # Extraer números de strings
+            for word in data.strip().split():
+                cleaned = normalize_string(word)
+                if cleaned and cleaned.isdigit():
+                    numbers.add(cleaned)
+
+    extract_numbers(info)
+    return sorted(list(numbers), key=lambda x: (len(x), x))

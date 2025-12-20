@@ -18,19 +18,22 @@
 
 **Cerbero** es una suite de herramientas diseñada para el perfilado de credenciales. Su objetivo es generar listas de nombres de usuario y contraseñas altamente personalizadas, simulando los patrones que las personas reales usan para crear sus credenciales. A diferencia de generadores genéricos, Cerbero utiliza datos contextuales (OSINT) para aumentar drásticamente la efectividad en auditorías de seguridad y pentesting ético.
 
-## 🚀 Características Principales
+## 🚀 Características Principales (v7.0)
 
 -   **🧠 Cuestionario Inteligente:** Solo pregunta la información relevante para los motores de generación que selecciones.
--   **⚙️ Arquitectura Multi-Motor:** Utiliza 8 lógicas de ataque distintas, desde combinaciones simples hasta patrones biográficos complejos.
+-   **⚙️ Arquitectura Multi-Motor:** Utiliza 12 lógicas de ataque distintas, desde combinaciones simples hasta ML-Patterns avanzados.
+-   **🏗️ Arquitectura Modular Profesional:** Código organizado en módulos especializados (core/, engines/, io/, modes/, optimizations/).
 -   **🎯 Modos Especializados:** Incluye generadores específicos para contraseñas, nombres de usuario y PINs numéricos.
--   🛡️ **Modo de Auditoría Defensiva:** Permite a un usuario verificar si sus propias contraseñas son vulnerables y predecibles.
+-   🛡️ **Modo de Auditoría Defensiva:** Permite a un usuario verificar si sus propias contraseñas son vulnerables y predecibles, con análisis de fortaleza integrado.
+-   **⚡ Bloom Filter:** Deduplicación escalable para wordlists de millones de entradas sin saturar la RAM.
+-   **📈 Barra de Progreso en Tiempo Real:** Visualización del progreso de generación.
 -   **✨ Normalización Unicode:** Maneja automáticamente acentos y caracteres especiales (ej: `José` -> `jose`).
 -   **🎛️ Control Total:** Permite activar/desactivar motores, definir límites de longitud y ejecutar en modo simulación (`dry run`).
 -   **📊 Estadísticas Detalladas:** Informa cuántas contraseñas generó cada motor y el tiempo que tardó.
 -   **🎨 Interfaz Moderna:** Una UI de terminal limpia y con colores para una mejor experiencia de usuario.
--   **🐍 Python Puro:** Sin dependencias externas, fácil de ejecutar y modificar.
+-   **🤖 Modo Headless:** Soporte CLI para automatización (merge y audit modes).
 
-## 🤖 El Poder de los 8 Motores de Generación
+## 🤖 El Poder de los 12 Motores de Generación
 
 Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar uno, varios o todos a la vez.
 
@@ -44,21 +47,33 @@ Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar un
 | **6** | **"Mangler" de Frases:** Destroza frases con Leetspeak.| `R3d$S3gura2024!#`                     |
 | **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Juan-Perez1982!`                  |
 | **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `T72b96j15` (Tamara72, Bastian96...)   |
+| **9** | **PRINCE:** Permutaciones inteligentes de palabras. **NUEVO v7.0** | `juanmaria2024!`  |
+| **10** | **PCFG:** Gramática probabilística contextual. **NUEVO v7.0** | `Maria1995#` |
+| **11** | **Keyboard Walk:** Patrones de teclado. **NUEVO v7.0** | `qwe123maria` |
+| **12** | **ML-Patterns:** Estructuras frecuentes. **NUEVO v7.0** | `Juan$95` |
 
 ## 🛠️ Instalación y Uso
 
-Cerbero no requiere instalación. Solo necesitas Python 3.7 o superior.
+Cerbero requiere Python 3.7 o superior.
 
 ```bash
-1. Clona el repositorio:
+# 1. Clona el repositorio:
 git clone https://github.com/syruxst/cerbero.git
 
-2. Navega al directorio:
+# 2. Navega al directorio:
 cd cerbero
 
-3. Ejecuta el script:
+# 3. Instala dependencias (opcional, solo para Bloom Filter):
+pip install -r requirements.txt
+
+# 4. Ejecuta el script (modo interactivo):
 python cerbero.py
- ```
+
+# 5. O ejecuta en modo headless (merge/audit):
+python cerbero.py --no-interactive --mode merge --input-files file1.txt,file2.txt --output merged.txt
+python cerbero.py --no-interactive --mode audit --wordlist rockyou.txt --password "MyPassword123"
+```
+
 Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
 
 ## ⚠️ Advertencia de Uso Ético

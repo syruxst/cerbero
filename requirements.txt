@@ -1,0 +1,8 @@
+# Cerbero v7.0 - Dependencias
+# Instalación: pip install -r requirements.txt
+
+# Bloom Filter escalable para deduplicación (Python puro, sin C extensions)
+# Permite manejar 100M+ contraseñas con memoria constante
+pybloom-live==4.0.0
+
+# No hay más dependencias - Python puro para el resto del sistema

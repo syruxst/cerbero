@@ -35,8 +35,8 @@ class TestEngines(unittest.TestCase):
         self.test_symbols = ['!', '#', '$', '@', '*']
 
     def test_all_engines_registered(self):
-        """Verificar que todos los 12 motores estén registrados"""
-        expected_engines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        """Verificar que todos los 13 motores estén registrados"""
+        expected_engines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
         for engine_id in expected_engines:
             self.assertIn(engine_id, ENGINE_STREAMS)
             self.assertIn(engine_id, ENGINE_DESCRIPTIONS)

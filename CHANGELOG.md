@@ -7,6 +7,10 @@ y el proyecto usa [Versionado Semántico](https://semver.org/lang/es/).
 ## [8.0.0] - 2026-11-07
 
 ### Añadido
+- **Motor 13 - Reglas estilo Hashcat**: aplica reglas de transformación
+  (subconjunto de la sintaxis Hashcat/John: `l u c C t r d f { } [ ] $X ^X TN
+  sXY`) a las palabras del contexto. Incluye un conjunto por defecto efectivo y
+  permite cargar archivos `.rule` propios con `cerbero generate --rules ARCHIVO`.
 - **Paquete instalable** (`pyproject.toml`): `pip install .` crea el comando
   `cerbero`. Instalación recomendada con `pipx`.
 - **CLI con subcomandos**: `generate`, `audit`, `merge`, `init-profile`, además

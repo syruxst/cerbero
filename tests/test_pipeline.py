@@ -25,8 +25,8 @@ SAMPLE = build_info(
 
 class TestResolveEngines(unittest.TestCase):
     def test_all(self):
-        self.assertEqual(len(resolve_engines("all")), 12)
-        self.assertEqual(len(resolve_engines(None)), 12)
+        self.assertEqual(len(resolve_engines("all")), 13)
+        self.assertEqual(len(resolve_engines(None)), 13)
 
     def test_subset_string_and_list(self):
         self.assertEqual(resolve_engines("1,3,10"), ["1", "3", "10"])

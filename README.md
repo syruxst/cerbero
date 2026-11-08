@@ -35,7 +35,7 @@ pentesting **ético y autorizado**.
 Ver [CHANGELOG.md](CHANGELOG.md) para el detalle completo (incluye correcciones
 de bugs del validador de fortaleza, el límite global y el determinismo del Motor 5).
 
-## 🧠 Los 12 motores de generación
+## 🧠 Los 13 motores de generación
 
 | Motor | Descripción | Ejemplo |
 | :--- | :--- | :--- |
@@ -51,6 +51,7 @@ de bugs del validador de fortaleza, el límite global y el determinismo del Moto
 | **10** | PCFG (gramática probabilística) | `Maria1995#` |
 | **11** | Keyboard Walk (patrones de teclado) | `qwe123maria` |
 | **12** | ML-Patterns (estructuras frecuentes) | `Juan$95` |
+| **13** | Reglas estilo Hashcat (best64 + `.rule` propios) | `Maria2024!`, `m4ri4`, `airam` |
 
 ## 🛠️ Instalación
 
@@ -95,7 +96,15 @@ cerbero generate --config perfil.yaml --engines 1,3,8 \
 
 # Estimar sin escribir
 cerbero generate --config perfil.yaml --dry-run
+
+# Motor 13 con tus propias reglas estilo Hashcat (.rule)
+cerbero generate --config perfil.yaml --engines 13 --rules best64.rule --output wl.txt
 ```
+
+El **Motor 13** aplica reglas de transformación (subconjunto de la sintaxis
+Hashcat/John: `l u c t r d $X ^X sXY T N` …) a las palabras del contexto. Trae
+un conjunto por defecto efectivo y, con `--rules ARCHIVO`, carga cualquier
+`.rule` (una regla por línea; `#` para comentarios).
 
 Ejemplo de `perfil.yaml`:
 

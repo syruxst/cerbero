@@ -35,6 +35,7 @@ from cerbero.core import (
 )
 from cerbero.core.pipeline import run_generation
 from cerbero.engines import ENGINE_DESCRIPTIONS
+from cerbero.engines.rules import load_rules_file
 from cerbero.modes import (
     run_audit_mode_interactive,
     run_full_mode_interactive,
@@ -54,6 +55,17 @@ def cmd_generate(args: argparse.Namespace) -> int:
     except ProfileError as exc:
         err_console.error(str(exc))
         return 2
+
+    # Reglas personalizadas (Motor 13) desde un archivo .rule opcional.
+    if args.rules:
+        try:
+            rules = load_rules_file(args.rules)
+        except OSError as exc:
+            err_console.error(f"No se pudo leer el archivo de reglas: {exc}")
+            return 2
+        if rules:
+            info["otros_datos"]["rules"] = rules
+            err_console.info(f"Cargadas {len(rules):,} reglas desde {args.rules}")
 
     if not args.stdout and not args.dry_run and not args.output:
         err_console.error("Debes indicar --output ARCHIVO (o usar --stdout / --dry-run).")
@@ -277,6 +289,7 @@ def build_parser() -> argparse.ArgumentParser:
     g = sub.add_parser("generate", help="Generar wordlist desde un perfil (headless).")
     g.add_argument("--config", required=True, help="Perfil de objetivo (.yaml/.json).")
     g.add_argument("--engines", default="all", help="Motores: 'all' o '1,3,8'.")
+    g.add_argument("--rules", help="Archivo .rule (estilo Hashcat) para el Motor 13.")
     g.add_argument("--output", help="Archivo de salida (.gz para comprimir).")
     g.add_argument("--min-len", type=int, default=DEFAULT_MIN_LEN)
     g.add_argument("--max-len", type=int, default=DEFAULT_MAX_LEN)

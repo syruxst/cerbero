@@ -180,6 +180,9 @@ def generate_base_words(info: dict) -> List[str]:
     def extract_words(data):
         if isinstance(data, dict):
             for key, value in data.items():
+                if key == "rules":
+                    # Reglas de Motor 13: metadato, no son palabras base.
+                    continue
                 if key == "fecha_nacimiento" and value:
                     # Añadir partes de la fecha (día, mes, año corto/largo)
                     words.add(str(value.day))
@@ -218,6 +221,9 @@ def generate_numeric_words(info: dict) -> List[str]:
     def extract_numbers(data):
         if isinstance(data, dict):
             for key, value in data.items():
+                if key == "rules":
+                    # Reglas de Motor 13: metadato, no son números.
+                    continue
                 if key == "fecha_nacimiento" and value:
                     # Añadir partes de la fecha (día, mes, año corto/largo)
                     numbers.add(str(value.day))

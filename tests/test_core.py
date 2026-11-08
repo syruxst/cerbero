@@ -1,18 +1,18 @@
-# coding: utf-8
 """
 Cerbero v7.0 - Tests Unitarios del Módulo Core
 Tests básicos para funciones principales
 """
 
 import unittest
-from core import (
-    full_leetspeak,
-    apply_variations,
+
+from cerbero.core import (
     apply_mangling_rules,
+    apply_variations,
+    estimate_entropy_bits,
+    full_leetspeak,
     generate_usernames,
     normalize_string,
-    estimate_entropy_bits,
-    validate_strength
+    validate_strength,
 )
 
 

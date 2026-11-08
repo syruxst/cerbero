@@ -1,16 +1,16 @@
-# coding: utf-8
 """
 Cerbero v7.0 - Tests Unitarios de Modos
 Validación de importación y estructura de modos
 """
 
 import unittest
-from modes import (
+
+from cerbero.modes import (
+    run_audit_mode_interactive,
     run_full_mode_interactive,
+    run_merge_mode_interactive,
     run_numeric_mode_interactive,
     run_username_mode_interactive,
-    run_merge_mode_interactive,
-    run_audit_mode_interactive
 )
 
 

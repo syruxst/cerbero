@@ -1,5 +1,12 @@
 # De Cero a Hacker con Python: Desmontando Cerbero
 
+> **Nota (v8.0):** A partir de la v8 el código vive dentro del paquete
+> `cerbero/` (subpaquetes `core/`, `engines/`, `ioutils/`, `modes/`,
+> `optimizations/`) y se ejecuta con el comando `cerbero` o `python -m cerbero`.
+> Esta guía explica los **conceptos y la lógica de los motores**, que siguen
+> siendo válidos; para la instalación y el uso actual (CLI con subcomandos y
+> modo headless con perfiles YAML) consulta el [README](README.md).
+
 ¡Bienvenido/a a la guía definitiva para entender y modificar Cerbero! Si alguna vez has querido aprender Python creando una herramienta de ciberseguridad real, estás en el lugar correcto. No necesitas experiencia previa en programación, solo curiosidad y ganas de aprender.
 
 Esta guía te llevará de la mano a través del código de Cerbero, explicando cada pieza como si fuera un bloque de LEGO. Al final, no solo entenderás cómo funciona la herramienta, sino que también tendrás las habilidades para modificarla y crear tus propias lógicas de ataque.

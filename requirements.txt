@@ -1,8 +1,14 @@
-# Cerbero v7.0 - Dependencias
-# Instalación: pip install -r requirements.txt
+# Cerbero v8.0 - Dependencias
+# Recomendado: instalar el paquete con  pip install .  (lee pyproject.toml)
+# o en modo editable para desarrollo:    pip install -e ".[dev]"
 
-# Bloom Filter escalable para deduplicación (Python puro, sin C extensions)
-# Permite manejar 100M+ contraseñas con memoria constante
-pybloom-live==4.0.0
+# Interfaz de terminal moderna (tablas, paneles, progreso)
+rich>=13.7
 
-# No hay más dependencias - Python puro para el resto del sistema
+# Carga de perfiles de objetivo en modo headless
+PyYAML>=6.0
+
+# --- Opcional ---
+# Bloom Filter escalable para deduplicación de 100M+ entradas con RAM constante.
+# Instálalo con:  pip install ".[bloom]"
+# pybloom-live>=4.0.0

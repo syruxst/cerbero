@@ -18,8 +18,9 @@ from .engine_10 import motor_10_pcfg_stream
 from .engine_11 import motor_11_keyboard_walk_stream
 from .engine_12 import motor_12_ml_patterns_stream
 
-# Motor nuevo (v8.0)
+# Motores nuevos (v8.0)
 from .engine_13 import motor_13_reglas_hashcat_stream
+from .engine_14 import motor_14_markov_stream
 
 # Registro de motores disponibles
 ENGINE_STREAMS = {
@@ -36,6 +37,7 @@ ENGINE_STREAMS = {
     '11': motor_11_keyboard_walk_stream,           # NUEVO en v7.0
     '12': motor_12_ml_patterns_stream,             # NUEVO en v7.0
     '13': motor_13_reglas_hashcat_stream,          # NUEVO en v8.0
+    '14': motor_14_markov_stream,                  # NUEVO en v8.0
 }
 
 
@@ -54,6 +56,7 @@ ENGINE_DESCRIPTIONS = {
     '11': "Keyboard Walk - Patrones de teclado (ej: qwe123maria)",
     '12': "ML-Patterns - Estructuras frecuentes (ej: Juan$95)",
     '13': "Reglas estilo Hashcat (ej: Maria2024!, m4ri4, airam)",
+    '14': "Markov contextual (ej: mariaperez, juanez, marez)",
 }
 
 
@@ -74,6 +77,7 @@ __all__ = [
     'motor_10_pcfg_stream',
     'motor_11_keyboard_walk_stream',
     'motor_12_ml_patterns_stream',
-    # Motor nuevo (13) - v8.0
+    # Motores nuevos (13-14) - v8.0
     'motor_13_reglas_hashcat_stream',
+    'motor_14_markov_stream',
 ]

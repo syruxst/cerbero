@@ -35,7 +35,7 @@ pentesting **ético y autorizado**.
 Ver [CHANGELOG.md](CHANGELOG.md) para el detalle completo (incluye correcciones
 de bugs del validador de fortaleza, el límite global y el determinismo del Motor 5).
 
-## 🧠 Los 13 motores de generación
+## 🧠 Los 14 motores de generación
 
 | Motor | Descripción | Ejemplo |
 | :--- | :--- | :--- |
@@ -52,6 +52,7 @@ de bugs del validador de fortaleza, el límite global y el determinismo del Moto
 | **11** | Keyboard Walk (patrones de teclado) | `qwe123maria` |
 | **12** | ML-Patterns (estructuras frecuentes) | `Juan$95` |
 | **13** | Reglas estilo Hashcat (best64 + `.rule` propios) | `Maria2024!`, `m4ri4`, `airam` |
+| **14** | Markov contextual (tokens al estilo del objetivo) | `mariaperez`, `sofiana`, `marian` |
 
 ## 🛠️ Instalación
 

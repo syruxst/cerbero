@@ -35,6 +35,12 @@ class TestResolveEngines(unittest.TestCase):
     def test_unknown_ignored(self):
         self.assertEqual(resolve_engines("1,99,abc"), ["1"])
 
+    def test_all_inside_list_expands(self):
+        # Regresión: el modo interactivo pasa ["all"], no "all".
+        self.assertEqual(len(resolve_engines(["all"])), 14)
+        self.assertEqual(len(resolve_engines(["1", "all"])), 14)
+        self.assertEqual(len(resolve_engines("ALL")), 14)
+
 
 class TestRunGeneration(unittest.TestCase):
     def _tmp(self) -> str:

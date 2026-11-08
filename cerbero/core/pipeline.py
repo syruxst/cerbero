@@ -47,17 +47,20 @@ def resolve_engines(spec: object) -> List[str]:
     Acepta 'all', 'all'/None, 'ALL', una cadena '1,3,8' o una lista.
     """
     available = list(ENGINE_STREAMS.keys())
+    all_aliases = {"all", "todos", "*", ""}
     if spec is None:
         return available
     if isinstance(spec, str):
-        spec_norm = spec.strip().lower()
-        if spec_norm in ("all", "todos", "*", ""):
-            return available
-        tokens = [t.strip() for t in spec_norm.split(",")]
+        tokens = [t.strip().lower() for t in spec.split(",")]
     elif isinstance(spec, (list, tuple)):
-        tokens = [str(t).strip() for t in spec]
+        tokens = [str(t).strip().lower() for t in spec]
     else:
         raise ValueError(f"Especificación de motores no válida: {spec!r}")
+
+    # 'all' (u otros alias) en cualquier posición selecciona todos los motores,
+    # tanto si viene como cadena ("all") como dentro de una lista (["all"]).
+    if any(t in all_aliases for t in tokens):
+        return available
 
     selected = [t for t in tokens if t in ENGINE_STREAMS]
     unknown = [t for t in tokens if t and t not in ENGINE_STREAMS]

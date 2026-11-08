@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cerbero"
+version = "8.0.0"
+description = "Suite de perfilado de credenciales: generador de wordlists contextuales para auditorías de seguridad y pentesting ético."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Daniel Ugalde" }]
+keywords = ["pentesting", "wordlist", "password", "security", "osint", "red-team"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+]
+dependencies = [
+    "rich>=13.7",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+bloom = ["pybloom-live>=4.0.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "types-PyYAML",
+]
+
+[project.urls]
+Homepage = "https://github.com/syruxst/cerbero"
+Repository = "https://github.com/syruxst/cerbero"
+Issues = "https://github.com/syruxst/cerbero/issues"
+
+[project.scripts]
+cerbero = "cerbero.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cerbero*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+cerbero = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = [
+    "E501",   # longitud de línea (gestionada por formatter)
+    "UP006",  # mantener typing.Dict/List: compat Python 3.9 en runtime
+    "UP035",  # idem (deprecated-import solo relevante en 3.10+)
+    "UP045",  # mantener Optional[X] por compat 3.9
+    "SIM115",  # open() sin context manager: intencional en ioutils/output.py
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+warn_redundant_casts = true
+ignore_missing_imports = true
+check_untyped_defs = true
+
+# Código nuevo (core nuevo + CLI) se mantiene con tipado limpio.
+# Los módulos heredados se irán tipando de forma incremental.
+[[tool.mypy.overrides]]
+module = [
+    "cerbero.ioutils.*",
+    "cerbero.engines.*",
+    "cerbero.optimizations.*",
+    "cerbero.modes.*",
+    "cerbero.core.models",
+]
+ignore_errors = true

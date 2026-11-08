@@ -5,90 +5,170 @@
 </p>
 
 <p align="center">
-  <strong>Una herramienta de línea de comandos en Python para generar wordlists contextuales y de alta precisión para auditorías de seguridad.</strong>
+  <strong>Herramienta de línea de comandos en Python para generar wordlists contextuales de alta precisión para auditorías de seguridad.</strong>
 </p>
 
 <p align="center">
   <img alt="GitHub" src="https://img.shields.io/github/license/syruxst/cerbero?color=blue&style=for-the-badge">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.7+-blue.svg?style=for-the-badge&logo=python">
-  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/syruxst/cerbero?color=blue&style=for-the-badge">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=for-the-badge&logo=python">
+  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/syruxst/cerbero/ci.yml?style=for-the-badge">
 </p>
 
 ---
 
-**Cerbero** es una suite de herramientas diseñada para el perfilado de credenciales. Su objetivo es generar listas de nombres de usuario y contraseñas altamente personalizadas, simulando los patrones que las personas reales usan para crear sus credenciales. A diferencia de generadores genéricos, Cerbero utiliza datos contextuales (OSINT) para aumentar drásticamente la efectividad en auditorías de seguridad y pentesting ético.
+**Cerbero** genera listas de nombres de usuario y contraseñas altamente
+personalizadas, simulando los patrones que las personas reales usan para crear
+sus credenciales. A diferencia de los generadores genéricos, Cerbero usa datos
+contextuales (OSINT) para aumentar la efectividad en auditorías de seguridad y
+pentesting **ético y autorizado**.
 
-## 🚀 Características Principales (v7.0)
+## 🚀 Novedades v8.0
 
--   **🧠 Cuestionario Inteligente:** Solo pregunta la información relevante para los motores de generación que selecciones.
--   **⚙️ Arquitectura Multi-Motor:** Utiliza 12 lógicas de ataque distintas, desde combinaciones simples hasta ML-Patterns avanzados.
--   **🏗️ Arquitectura Modular Profesional:** Código organizado en módulos especializados (core/, engines/, io/, modes/, optimizations/).
--   **🎯 Modos Especializados:** Incluye generadores específicos para contraseñas, nombres de usuario y PINs numéricos.
--   🛡️ **Modo de Auditoría Defensiva:** Permite a un usuario verificar si sus propias contraseñas son vulnerables y predecibles, con análisis de fortaleza integrado.
--   **⚡ Bloom Filter:** Deduplicación escalable para wordlists de millones de entradas sin saturar la RAM.
--   **📈 Barra de Progreso en Tiempo Real:** Visualización del progreso de generación.
--   **✨ Normalización Unicode:** Maneja automáticamente acentos y caracteres especiales (ej: `José` -> `jose`).
--   **🎛️ Control Total:** Permite activar/desactivar motores, definir límites de longitud y ejecutar en modo simulación (`dry run`).
--   **📊 Estadísticas Detalladas:** Informa cuántas contraseñas generó cada motor y el tiempo que tardó.
--   **🎨 Interfaz Moderna:** Una UI de terminal limpia y con colores para una mejor experiencia de usuario.
--   **🤖 Modo Headless:** Soporte CLI para automatización (merge y audit modes).
+- **📦 Paquete instalable** con comando `cerbero` (instalable con `pipx`).
+- **⌨️ CLI con subcomandos**: `generate`, `audit`, `merge`, `init-profile` + menú interactivo.
+- **🤖 Headless real** con perfiles de objetivo **YAML/JSON** reutilizables.
+- **🔗 Modo `--stdout`** para encadenar directo con **hashcat/john**.
+- **🎨 Interfaz Rich** (tablas y paneles) con degradación elegante.
+- **🧱 Arquitectura de paquete** (`cerbero/`), pipeline único, logging y tipado.
+- **✅ Calidad**: tests, `ruff`, `mypy` y CI en Python 3.9–3.12.
 
-## 🤖 El Poder de los 12 Motores de Generación
+Ver [CHANGELOG.md](CHANGELOG.md) para el detalle completo (incluye correcciones
+de bugs del validador de fortaleza, el límite global y el determinismo del Motor 5).
 
-Cerbero combina la potencia de múltiples lógicas de ataque. Puedes ejecutar uno, varios o todos a la vez.
+## 🧠 Los 14 motores de generación
 
-| Motor | Descripción                                         | Ejemplo de Contraseña Generada        |
-| :---- | :-------------------------------------------------- | :------------------------------------ |
-| **1** | **Combinaciones Simples:** Estilo RockYou clásico.      | `Juan1982`, `tamarapavez`             |
-| **2** | **Patrones Complejos:** Estilo WiFi/corporativo.      | `kasa-tapia/329`, `Juan_Pereze#2024`  |
-| **3** | **Leetspeak Moderno:** Patrón de `Año+NombreLeet`.     | `2025Ju4n%`                         |
-| **4** | **Centrado en Hijos:** Usa el año e iniciales del hijo.| `2012Tpub$`                           |
-| **5** | **Permutación de Iniciales:** Teje iniciales y números.| `Jtb1772` (Juan, Tamara, Bastian...) |
-| **6** | **"Mangler" de Frases:** Destroza frases con Leetspeak.| `R3d$S3gura2024!#`                     |
-| **7** | **Combinatorio Creativo:** Mezcla 3+ elementos.       | `Juan-Perez1982!`                  |
-| **8** | **Cadenas Biográficas:** Concatena `Inicial+Año`.     | `T72b96j15` (Tamara72, Bastian96...)   |
-| **9** | **PRINCE:** Permutaciones inteligentes de palabras. **NUEVO v7.0** | `juanmaria2024!`  |
-| **10** | **PCFG:** Gramática probabilística contextual. **NUEVO v7.0** | `Maria1995#` |
-| **11** | **Keyboard Walk:** Patrones de teclado. **NUEVO v7.0** | `qwe123maria` |
-| **12** | **ML-Patterns:** Estructuras frecuentes. **NUEVO v7.0** | `Juan$95` |
+| Motor | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| **1** | Combinaciones simples (estilo RockYou) | `Juan1982` |
+| **2** | Patrones complejos (WiFi/corporativo) | `kasa-tapia/329` |
+| **3** | Leetspeak moderno (`Año+NombreLeet`) | `2025Ju4n%` |
+| **4** | Centrado en hijos (año e iniciales) | `2012Tpub$` |
+| **5** | Permutación de iniciales familiares | `Jtb1772` |
+| **6** | "Mangler" de frases con leetspeak | `R3d$S3gura2024!#` |
+| **7** | Combinatorio creativo (3+ elementos) | `Juan-Perez1982!` |
+| **8** | Cadenas biográficas (`Inicial+Año`) | `T72b96j15` |
+| **9** | PRINCE (permutaciones inteligentes) | `juanmaria2024!` |
+| **10** | PCFG (gramática probabilística) | `Maria1995#` |
+| **11** | Keyboard Walk (patrones de teclado) | `qwe123maria` |
+| **12** | ML-Patterns (estructuras frecuentes) | `Juan$95` |
+| **13** | Reglas estilo Hashcat (best64 + `.rule` propios) | `Maria2024!`, `m4ri4`, `airam` |
+| **14** | Markov contextual (tokens al estilo del objetivo) | `mariaperez`, `sofiana`, `marian` |
 
-## 🛠️ Instalación y Uso
+## 🛠️ Instalación
 
-Cerbero requiere Python 3.7 o superior.
+Cerbero requiere Python 3.9 o superior.
 
 ```bash
-# 1. Clona el repositorio:
+# Opción recomendada: aislado con pipx
+pipx install git+https://github.com/syruxst/cerbero.git
+
+# O clásico con pip (idealmente en un entorno virtual)
 git clone https://github.com/syruxst/cerbero.git
-
-# 2. Navega al directorio:
 cd cerbero
+pip install .
 
-# 3. Instala dependencias (opcional, solo para Bloom Filter):
-pip install -r requirements.txt
-
-# 4. Ejecuta el script (modo interactivo):
-python cerbero.py
-
-# 5. O ejecuta en modo headless (merge/audit):
-python cerbero.py --no-interactive --mode merge --input-files file1.txt,file2.txt --output merged.txt
-python cerbero.py --no-interactive --mode audit --wordlist rockyou.txt --password "MyPassword123"
+# Con soporte de Bloom Filter (deduplicación de 100M+ con RAM constante)
+pip install ".[bloom]"
 ```
 
-Aparecerá un menú interactivo que te guiará a través de los diferentes modos de operación.
+Esto deja disponible el comando `cerbero`. También puedes ejecutarlo sin
+instalar con `python -m cerbero`.
 
-## ⚠️ Advertencia de Uso Ético
-[!] IMPORTANTE: Cerbero es una herramienta creada con fines educativos y para ser utilizada exclusivamente en auditorías de seguridad y pentesting dentro de un marco legal y con autorización explícita del propietario del sistema. El uso no autorizado de esta herramienta para intentar acceder a sistemas ajenos es ilegal. El autor no se hace responsable del mal uso de este programa.
+## ⚡ Uso
 
-## 🤝 Cómo Contribuir
-¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos motores, optimizaciones o correcciones, no dudes en participar.
-* Haz un Fork del proyecto.
-* Crea una nueva rama (git checkout -b feature/AmazingFeature).
-* Haz Commit de tus cambios (git commit -m 'Add some AmazingFeature').
-* Haz Push a la rama (git push origin feature/AmazingFeature).
-* Abre un Pull Request.
+### Interactivo (por defecto)
+
+```bash
+cerbero
+```
+
+### Headless con perfil de objetivo
+
+```bash
+# 1) Crea una plantilla de perfil y edítala
+cerbero init-profile perfil.yaml
+
+# 2) Genera la wordlist
+cerbero generate --config perfil.yaml --engines all --output wl.txt
+
+# Solo algunos motores, con límites y rango de longitud
+cerbero generate --config perfil.yaml --engines 1,3,8 \
+    --min-len 8 --max-len 20 --limit 2000000 --output wl.txt.gz
+
+# Estimar sin escribir
+cerbero generate --config perfil.yaml --dry-run
+
+# Motor 13 con tus propias reglas estilo Hashcat (.rule)
+cerbero generate --config perfil.yaml --engines 13 --rules best64.rule --output wl.txt
+```
+
+El **Motor 13** aplica reglas de transformación (subconjunto de la sintaxis
+Hashcat/John: `l u c t r d $X ^X sXY T N` …) a las palabras del contexto. Trae
+un conjunto por defecto efectivo y, con `--rules ARCHIVO`, carga cualquier
+`.rule` (una regla por línea; `#` para comentarios).
+
+Ejemplo de `perfil.yaml`:
+
+```yaml
+persona_principal:
+  nombres: [José, Luis]
+  apellidos: [Núñez]
+  fecha_nacimiento: 1985-07-12   # o 12/07/1985
+  sobrenombre: Pepe
+pareja:
+  nombres: [María]
+  fecha_nacimiento: 02/03/1987
+hijos:
+  - nombres: [Benjamín]
+    fecha_nacimiento: 2012-09-01
+otros:
+  frases: [Red Segura]
+  mangle_phrases: [Red Segura]
+  numeros_importantes: ["1234"]
+```
+
+### Encadenar con hashcat / john (`--stdout`)
+
+Las contraseñas salen por **stdout** y el diagnóstico por **stderr**, así que el
+pipe queda limpio:
+
+```bash
+cerbero generate --config perfil.yaml --engines all --stdout | hashcat -m 0 hash.txt
+cerbero generate --config perfil.yaml --stdout | john --stdin hash.txt
+```
+
+### Auditoría defensiva y unión de listas
+
+```bash
+# ¿Tu contraseña está en una wordlist? + análisis de fortaleza
+cerbero audit --wordlist rockyou.txt --password "MiClave123"
+
+# Unir y deduplicar varias listas
+cerbero merge --input-files a.txt,b.txt.gz --output unificada.txt
+```
+
+## ⚠️ Advertencia de uso ético
+
+**Cerbero es para uso exclusivo en auditorías de seguridad y pentesting con
+autorización explícita del propietario del sistema, o sobre tus propias
+credenciales.** El uso no autorizado para acceder a sistemas ajenos es ilegal.
+El autor no se responsabiliza por el mal uso de esta herramienta.
+
+## 🤝 Contribuir
+
+```bash
+pip install -e ".[dev]"
+ruff check cerbero tests
+mypy cerbero
+pytest
+```
+
+PRs bienvenidos: nuevos motores, optimizaciones o correcciones.
 
 ## 📄 Licencia
-Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
+
+Licencia MIT. Consulta [LICENSE](LICENSE).
 
 ## 👤 Autor
-Daniel Ugalde - GitHub @syruxst
+
+Daniel Ugalde - GitHub [@syruxst](https://github.com/syruxst)

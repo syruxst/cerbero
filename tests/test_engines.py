@@ -1,11 +1,11 @@
-# coding: utf-8
 """
 Cerbero v7.0 - Tests Unitarios de Motores
 Validación básica de que todos los motores funcionan
 """
 
 import unittest
-from engines import ENGINE_STREAMS, ENGINE_DESCRIPTIONS
+
+from cerbero.engines import ENGINE_DESCRIPTIONS, ENGINE_STREAMS
 
 
 class TestEngines(unittest.TestCase):
@@ -35,8 +35,8 @@ class TestEngines(unittest.TestCase):
         self.test_symbols = ['!', '#', '$', '@', '*']
 
     def test_all_engines_registered(self):
-        """Verificar que todos los 12 motores estén registrados"""
-        expected_engines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        """Verificar que todos los 14 motores estén registrados"""
+        expected_engines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14']
         for engine_id in expected_engines:
             self.assertIn(engine_id, ENGINE_STREAMS)
             self.assertIn(engine_id, ENGINE_DESCRIPTIONS)
@@ -104,7 +104,7 @@ class TestEngines(unittest.TestCase):
 
     def test_engines_return_generators(self):
         """Verificar que todos los motores retornen generadores"""
-        for engine_id, engine_func in ENGINE_STREAMS.items():
+        for _engine_id, engine_func in ENGINE_STREAMS.items():
             gen = engine_func(self.test_info, self.test_text_words, self.test_numeric_words, self.test_symbols)
             # Verificar que es un generador
             self.assertTrue(hasattr(gen, '__iter__'))

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-# coding: utf-8
 """
 Cerbero v7.0 - Ejecutor de Tests
 Script para ejecutar todos los tests unitarios
 """
 
-import unittest
-import sys
 import os
+import sys
+import unittest
 
 # Añadir el directorio padre al path para importar módulos
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
